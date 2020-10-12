@@ -1,8 +1,9 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
-import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE, Marker, Callout } from "react-native-maps";
 import * as Location from "expo-location";
+import { Fontisto } from "@expo/vector-icons";
 
 export default function App() {
   const [location, setLocation] = useState(null);
@@ -33,14 +34,26 @@ export default function App() {
         <MapView
           provider={PROVIDER_GOOGLE}
           style={styles.mapStyle}
-          showsUserLocation={true}
+          // showsUserLocation={true}
           initialRegion={{
             latitude: location.coords.latitude,
             longitude: location.coords.longitude,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
-        />
+          loadingEnabled={true}
+          strokeWidth={1}
+        >
+          <Marker
+            coordinate={{
+              latitude: location.coords.latitude,
+              longitude: location.coords.longitude,
+            }}
+          >
+            <Text>Victor</Text>
+            <Fontisto name="user-secret" size={24} color="black" />
+          </Marker>
+        </MapView>
       ) : (
         <Text>Loading...</Text>
       )}
