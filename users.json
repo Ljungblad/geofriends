@@ -1,0 +1,24 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "email": "example@mail.com",
+            "name": "Henry Heriksson",
+            "image": "img.png",
+            "location": {
+                "latitude": 57.71458159,
+                "longitude": 11.96143523
+            }
+        },
+        {
+            "id": 2,
+            "email": "hej@mail.com",
+            "name": "Mia Hermansson",
+            "image": "img.png",
+            "location": {
+                "latitude": 57.69193267,
+                "longitude": 11.96651500
+            }
+        }
+    ]
+}
