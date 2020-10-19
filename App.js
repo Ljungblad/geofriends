@@ -1,6 +1,6 @@
 import React from "react";
-import MapScreen from "./screens/MapScreen/MapScreen";
+import TabNavigator from "./routes/TabNavigator";
 
 export default function App() {
-  return <MapScreen></MapScreen>;
+  return <TabNavigator />;
 }
