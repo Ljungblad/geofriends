@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Text, View } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from "react-native-maps";
 import * as Location from "expo-location";
-import data from "../../users.json";
+// import data from "../../users.json";
 import styles from "./styles";
+import firebase from "../../FirebaseConfig";
 
 //ICONS
 import { Feather } from "@expo/vector-icons";
@@ -13,7 +14,17 @@ import { Octicons } from "@expo/vector-icons";
 const MapScreen = () => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-  // const [users, setUsers] = useState(null);
+  const [users, setUsers] = useState(null);
+
+  const getUsers = () => {
+    firebase
+      .database()
+      .ref("users/")
+      .on("value", (snapshot) => {
+        const users = snapshot.val();
+        setUsers(users);
+      });
+  };
 
   useEffect(() => {
     (async () => {
@@ -21,9 +32,9 @@ const MapScreen = () => {
       if (status !== "granted") {
         setErrorMsg("Permission to access location was denied");
       }
-
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
+      getUsers();
     })();
   }, []);
 
@@ -50,8 +61,8 @@ const MapScreen = () => {
           loadingEnabled={true}
           strokeWidth={1}
         >
-          {data &&
-            data.users.map((user, i) => (
+          {users &&
+            users.map((user, i) => (
               <Marker
                 coordinate={{
                   latitude: user.location.latitude,
