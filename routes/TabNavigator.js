@@ -1,5 +1,4 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MapScreen from "../screens/MapScreen/MapScreen";
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
@@ -9,7 +8,6 @@ import FriendStackScreen from "./FriendStack";
 const Tabs = createBottomTabNavigator();
 
 const TabNavigator = () => (
-  <NavigationContainer>
     <Tabs.Navigator
       tabBarOptions={{
         activeTintColor: "#e91e63",
@@ -45,7 +43,6 @@ const TabNavigator = () => (
         }}
       />
     </Tabs.Navigator>
-  </NavigationContainer>
 );
 
 export default TabNavigator;
