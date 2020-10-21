@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import { Text, View, TextInput, Button } from "react-native";
 import styles from "./styles";
 import firebase from "../../FirebaseConfig";
+//import * as firebase from 'firebase';
 
 const SignUpScreen = ({ navigation }) => {
     const [email, setEmail] = useState("email");
@@ -10,8 +11,13 @@ const SignUpScreen = ({ navigation }) => {
     const handleSignUp = () => {
         firebase
             .auth()
-            .createUserWithEmailAndPassword()
-            .then(() => console.log('navigate to main view'))
+            .createUserWithEmailAndPassword(email, password)
+            .then(() => {
+                console.log('User created');
+            })
+            .catch(error => {
+                console.error(error);
+            })
     }
 
     // console.log(email);
@@ -31,14 +37,10 @@ const SignUpScreen = ({ navigation }) => {
             secureTextEntry={true}
             onChangeText={(password) => setPassword(password)}
         />
-        <Button title="Sign up" onPress={() => {
-                console.log(email) 
-                console.log(password)
-                // handleSignUp, login, navigate to homescreen.
-            }} 
+        <Button title="Sign up" onPress={handleSignUp} 
         />
         <Text>Already have an account?</Text>
-        <Button title="Login" onPress={() => console.log('navigate to login screen')} />
+        <Button title="Login" onPress={() => navigation.navigate('Login')} />
     </View>
   );
 };
