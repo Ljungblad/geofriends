@@ -14,17 +14,33 @@ import { Octicons } from "@expo/vector-icons";
 const MapScreen = () => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-  const [users, setUsers] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [following, setFollowing] = useState(null);
 
   const getUsers = () => {
+    following.forEach(followId => {
+      firebase
+        .database()
+        .ref("users/" + followId)
+        .on("value", (snapshot) => {
+          const user = snapshot.val();
+  
+          //console.log(user);
+          //setUsers([...users, user]);
+        });
+    });
+  };
+
+  const getFollowing = () => {
     firebase
       .database()
-      .ref("users/")
+      .ref("users/" + firebase.auth().currentUser.uid)
+      .child("following")
       .on("value", (snapshot) => {
-        const users = snapshot.val();
-        setUsers(users);
+        const following = snapshot.val();
+        setFollowing(following);
       });
-  };
+  }
 
   useEffect(() => {
     (async () => {
@@ -34,7 +50,10 @@ const MapScreen = () => {
       }
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      getUsers();
+      getFollowing();
+      if (following !== null) {
+        getUsers();
+      }
     })();
   }, []);
 
@@ -61,7 +80,7 @@ const MapScreen = () => {
           loadingEnabled={true}
           strokeWidth={1}
         >
-          {users &&
+          {/* {users &&
             users.map((user, i) => (
               <Marker
                 coordinate={{
@@ -75,7 +94,7 @@ const MapScreen = () => {
                   <Text>{user.name}</Text>
                 </Callout>
               </Marker>
-            ))}
+            ))} */}
           <Marker
             coordinate={{
               latitude: location.coords.latitude,
