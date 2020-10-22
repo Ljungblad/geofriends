@@ -22,7 +22,8 @@ const SignUpScreen = ({ navigation }) => {
                         latitude: 57.709469370988344,
                         longitude: 12.00431258830776,
                     },
-                    imageUrl: ""
+                    imageUrl: "",
+                    following: [""],
                 })
 
                 console.log('User created');

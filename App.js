@@ -6,7 +6,7 @@ import firebase from "./FirebaseConfig";
 
 export default function App() {
   const [user, setUser] = useState();
-  console.log(user);
+  // console.log(user);
 
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {

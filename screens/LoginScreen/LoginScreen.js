@@ -13,7 +13,6 @@ const LoginScreen = ({ navigation }) => {
         .auth()
         .signInWithEmailAndPassword(email, password)
         .then(() => {
-            //navigation.navigate('Map');
             console.log('Logged in');
         })
         .catch(error => {

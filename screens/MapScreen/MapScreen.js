@@ -14,24 +14,33 @@ import { Octicons } from "@expo/vector-icons";
 const MapScreen = () => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-  const [users, setUsers] = useState(null);
+  const [users, setUsers] = useState([]);
+  const [following, setFollowing] = useState(null);
 
   const getUsers = () => {
-    firebase
-      .database()
-      .ref("users/")
-      .orderByKey()	
-      .equalTo("jka5I7r4PpNDqlfPynPbOqMUFUa2")
-      .on("value", (snapshot) => {
-        const users = snapshot.val();
-
-        console.log(users);
+    following.forEach(followId => {
+      firebase
+        .database()
+        .ref("users/" + followId)
+        .on("value", (snapshot) => {
+          const user = snapshot.val();
   
-        //setUsers(users);
-      });
+          //console.log(user);
+          //setUsers([...users, user]);
+        });
+    });
   };
 
-  //console.log(users);
+  const getFollowing = () => {
+    firebase
+      .database()
+      .ref("users/" + firebase.auth().currentUser.uid)
+      .child("following")
+      .on("value", (snapshot) => {
+        const following = snapshot.val();
+        setFollowing(following);
+      });
+  }
 
   useEffect(() => {
     (async () => {
@@ -41,7 +50,10 @@ const MapScreen = () => {
       }
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      getUsers();
+      getFollowing();
+      if (following !== null) {
+        getUsers();
+      }
     })();
   }, []);
 
