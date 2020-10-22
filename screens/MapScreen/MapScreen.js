@@ -20,12 +20,18 @@ const MapScreen = () => {
     firebase
       .database()
       .ref("users/")
+      .orderByKey()	
+      .equalTo("jka5I7r4PpNDqlfPynPbOqMUFUa2")
       .on("value", (snapshot) => {
         const users = snapshot.val();
-        setUsers(users);
+
+        console.log(users);
+  
+        //setUsers(users);
       });
   };
 
+  //console.log(users);
 
   useEffect(() => {
     (async () => {
@@ -62,7 +68,7 @@ const MapScreen = () => {
           loadingEnabled={true}
           strokeWidth={1}
         >
-          {users &&
+          {/* {users &&
             users.map((user, i) => (
               <Marker
                 coordinate={{
@@ -76,7 +82,7 @@ const MapScreen = () => {
                   <Text>{user.name}</Text>
                 </Callout>
               </Marker>
-            ))}
+            ))} */}
           <Marker
             coordinate={{
               latitude: location.coords.latitude,
