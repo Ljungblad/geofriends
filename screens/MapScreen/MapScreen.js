@@ -10,37 +10,39 @@ import firebase from "../../FirebaseConfig";
 import { Feather } from "@expo/vector-icons";
 import { Fontisto } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
+import { firestore } from "firebase";
+import { set } from "react-native-reanimated";
 
 const MapScreen = () => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-  const [users, setUsers] = useState([]);
+  // const [users, setUsers] = useState([]);
   const [following, setFollowing] = useState(null);
 
-  const getUsers = () => {
-    following.forEach(followId => {
-      firebase
-        .database()
-        .ref("users/" + followId)
-        .on("value", (snapshot) => {
-          const user = snapshot.val();
-  
-          //console.log(user);
-          //setUsers([...users, user]);
-        });
-    });
-  };
+  // const users = await usersRef.where('users', 'in', ['USA', 'Japan']).get();
 
-  const getFollowing = () => {
-    firebase
-      .database()
-      .ref("users/" + firebase.auth().currentUser.uid)
-      .child("following")
-      .on("value", (snapshot) => {
-        const following = snapshot.val();
-        setFollowing(following);
-      });
-  }
+  const getFollowList = async () => {
+    const userId = firebase.auth().currentUser.uid;
+    const usersRef = firebase.firestore().collection("users").doc(userId);
+    const userData = await usersRef.get();
+    if (userData.exists) {
+      const followingList = userData.data().following;
+
+      try {
+        const users = await firebase
+          .firestore()
+          .collection("users")
+          .where("id", "in", ["xdnCSHzZtGRMPOW5WGaxBqJFJGL2"])
+          .get();
+
+        users.forEach((doc) => {
+          console.log(doc.id, "=>", doc.data());
+        });
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  };
 
   useEffect(() => {
     (async () => {
@@ -50,10 +52,7 @@ const MapScreen = () => {
       }
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      getFollowing();
-      if (following !== null) {
-        getUsers();
-      }
+      getFollowList();
     })();
   }, []);
 
