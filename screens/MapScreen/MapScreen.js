@@ -16,10 +16,9 @@ import { set } from "react-native-reanimated";
 const MapScreen = () => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
-  // const [users, setUsers] = useState([]);
-  const [following, setFollowing] = useState(null);
-
-  // const users = await usersRef.where('users', 'in', ['USA', 'Japan']).get();
+  const [users, setUsers] = useState(null);
+  // const [following, setFollowing] = useState(null);
+  let arr = [];
 
   const getFollowList = async () => {
     const userId = firebase.auth().currentUser.uid;
@@ -32,12 +31,14 @@ const MapScreen = () => {
         const users = await firebase
           .firestore()
           .collection("users")
-          .where("id", "in", ["xdnCSHzZtGRMPOW5WGaxBqJFJGL2"])
+          .where("id", "in", followingList)
           .get();
 
-        users.forEach((doc) => {
-          console.log(doc.id, "=>", doc.data());
+        users.forEach((user) => {
+          const data = user.data();
+          arr.push(data);
         });
+        setUsers(arr);
       } catch (e) {
         console.error(e);
       }
@@ -79,7 +80,7 @@ const MapScreen = () => {
           loadingEnabled={true}
           strokeWidth={1}
         >
-          {/* {users &&
+          {users &&
             users.map((user, i) => (
               <Marker
                 coordinate={{
@@ -93,7 +94,7 @@ const MapScreen = () => {
                   <Text>{user.name}</Text>
                 </Callout>
               </Marker>
-            ))} */}
+            ))}
           <Marker
             coordinate={{
               latitude: location.coords.latitude,
