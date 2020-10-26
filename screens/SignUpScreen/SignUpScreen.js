@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Text, View, TextInput, Button } from "react-native";
+import InputField from "../../components/InputField/InputField";
+import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import styles from "./styles";
 import firebase from "../../FirebaseConfig";
 //import * as firebase from 'firebase';
@@ -38,24 +40,24 @@ const SignUpScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text>Sign Up Screen</Text>
-      <TextInput
-        placeholder="Name"
-        autoCapitalize="none"
+      <Text>Sign up</Text>
+      <InputField
+        label="Name"
+        placeholder="Your name"
         onChangeText={(name) => setName(name)}
       />
-      <TextInput
-        placeholder="Email"
-        autoCapitalize="none"
+      <InputField
+        label="Email"
+        placeholder="example@mail.com"
         onChangeText={(email) => setEmail(email)}
       />
-      <TextInput
+      <InputField
+        label="Password"
         placeholder="Password"
-        autoCapitalize="none"
         secureTextEntry={true}
         onChangeText={(password) => setPassword(password)}
       />
-      <Button title="Sign up" onPress={handleSignUp} />
+      <SubmitButton label="Sign up" onPress={handleSignUp} />
       <Text>Already have an account?</Text>
       <Button title="Login" onPress={() => navigation.navigate("Login")} />
     </View>
