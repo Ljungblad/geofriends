@@ -4,7 +4,10 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+  },
+  topBar: {
+    flexDirection: "row",
+    height: 50,
+    marginBottom: 40,
   },
 });
