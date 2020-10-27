@@ -9,23 +9,27 @@ import firebase from "../../FirebaseConfig";
 import { Feather } from "@expo/vector-icons";
 import { Fontisto } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
-import { firestore } from "firebase";
-import { set } from "react-native-reanimated";
 
 const MapScreen = () => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [users, setUsers] = useState(null);
-  // const [following, setFollowing] = useState(null);
-  let arr = [];
+  
+  let userList = [];
+  const userId = firebase.auth().currentUser.uid;
+  const currentUserRef = firebase.firestore().collection("users").doc(userId);
+
+  const updateLocation = async () => {
+    await currentUserRef.update({
+      'location.latitude': location.coords.latitude,
+      'location.longitude': location.coords.longitude,
+    })
+  }
 
   const getFollowList = async () => {
-    const userId = firebase.auth().currentUser.uid;
-    const usersRef = firebase.firestore().collection("users").doc(userId);
-    const userData = await usersRef.get();
+    const userData = await currentUserRef.get();
     if (userData.exists) {
       const followingList = userData.data().following;
-
       try {
         const users = await firebase
           .firestore()
@@ -35,9 +39,9 @@ const MapScreen = () => {
 
         users.forEach((user) => {
           const data = user.data();
-          arr.push(data);
+          userList.push(data);
         });
-        setUsers(arr);
+        setUsers(userList);
       } catch (e) {
         console.error(e);
       }
@@ -55,6 +59,10 @@ const MapScreen = () => {
       getFollowList();
     })();
   }, []);
+  
+  if (location) {
+    updateLocation();
+  }
 
   let text = "Waiting..";
   if (errorMsg) {
