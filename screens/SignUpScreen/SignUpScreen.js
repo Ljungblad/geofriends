@@ -25,8 +25,8 @@ const SignUpScreen = ({ navigation }) => {
             name: name,
             email: email,
             location: {
-              latitude: 57.709469370988344,
-              longitude: 12.00431258830776,
+              latitude: 57.909469370988344,
+              longitude: 12.10431258830776,
             },
             imageUrl: "",
             following: [""],
