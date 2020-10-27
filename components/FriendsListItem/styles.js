@@ -10,12 +10,12 @@ export default StyleSheet.create({
   },
   text: {
     fontSize: 16,
-    marginLeft: 18, 
+    marginLeft: 18,
   },
   image: {
     width: 40,
     height: 40,
     borderRadius: 40,
     backgroundColor: "#aaa",
-  }
+  },
 });
