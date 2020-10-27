@@ -14,17 +14,17 @@ const MapScreen = () => {
   const [location, setLocation] = useState(null);
   const [errorMsg, setErrorMsg] = useState(null);
   const [users, setUsers] = useState(null);
-  
+
   let userList = [];
   const userId = firebase.auth().currentUser.uid;
   const currentUserRef = firebase.firestore().collection("users").doc(userId);
 
   const updateLocation = async () => {
     await currentUserRef.update({
-      'location.latitude': location.coords.latitude,
-      'location.longitude': location.coords.longitude,
-    })
-  }
+      "location.latitude": location.coords.latitude,
+      "location.longitude": location.coords.longitude,
+    });
+  };
 
   const getFollowList = async () => {
     const userData = await currentUserRef.get();
@@ -59,7 +59,7 @@ const MapScreen = () => {
       getFollowList();
     })();
   }, []);
-  
+
   if (location) {
     updateLocation();
   }
