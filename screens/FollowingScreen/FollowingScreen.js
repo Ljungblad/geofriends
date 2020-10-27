@@ -37,7 +37,6 @@ const FollowingScreen = ({ navigation }) => {
   useEffect(() => {
     getFollowList();
   }, []);
-  console.log(users);
 
   return (
     <View style={styles.container}>

@@ -45,6 +45,7 @@ const AddFriendModal = ({ navigation }) => {
       <CloseButton
         style={styles.closeButton}
         onPress={() => navigation.goBack()}
+        size={30}
       />
       <Text>Follow a friend by adding their email</Text>
       <InputField
