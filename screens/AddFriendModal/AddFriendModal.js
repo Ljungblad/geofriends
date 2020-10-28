@@ -31,7 +31,6 @@ const AddFriendModal = ({ navigation }) => {
       .then((snapshot) => {
         snapshot.forEach((doc) => {
           const userId = doc.id;
-          console.log(userId);
           updateFollowingList(userId);
         });
       })

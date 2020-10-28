@@ -30,6 +30,7 @@ const MapScreen = () => {
     const userData = await currentUserRef.get();
     if (userData.exists) {
       const followingList = userData.data().following;
+      if (followingList.length <= 0) return;
       try {
         const users = await firebase
           .firestore()

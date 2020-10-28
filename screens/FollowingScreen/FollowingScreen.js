@@ -6,36 +6,49 @@ import styles from "./styles";
 import firebase from "../../FirebaseConfig";
 
 const FollowingScreen = ({ navigation }) => {
+  // CLEAN UP CODE
   const [users, setUsers] = useState(null);
-
-  let userList = [];
+  const [followingList, setFollowingList] = useState([]);
   const userId = firebase.auth().currentUser.uid;
   const currentUserRef = firebase.firestore().collection("users").doc(userId);
+  const userData = currentUserRef.get();
+  let userList = [];
+  const [updated, setUpdated] = useState(false);
 
-  const getFollowList = async () => {
-    const userData = await currentUserRef.get();
-    if (userData.exists) {
-      const followingList = userData.data().following;
-      try {
-        const users = await firebase
-          .firestore()
-          .collection("users")
-          .where("id", "in", followingList)
-          .get();
+  const getFollowingList = () => {
+    return currentUserRef.onSnapshot((snapshot) => {
+      const userFollowList = snapshot.data().following;
+      setFollowingList(userFollowList);
+      setUpdated(true);
+    });
+  };
 
-        users.forEach((user) => {
-          const data = user.data();
-          userList.push(data);
-        });
-        setUsers(userList);
-      } catch (e) {
-        console.error(e);
-      }
+  const getUsers = async () => {
+    if (followingList.length <= 0) return;
+    try {
+      const users = await firebase
+        .firestore()
+        .collection("users")
+        .where("id", "in", followingList)
+        .get();
+
+      users.forEach((user) => {
+        const data = user.data();
+        userList.push(data);
+      });
+      setUsers(userList);
+      setUpdated(false);
+    } catch (e) {
+      console.error(e);
     }
   };
 
+  if (updated) {
+    getUsers();
+  }
+
   useEffect(() => {
-    getFollowList();
+    getFollowingList();
   }, []);
 
   return (
@@ -44,7 +57,7 @@ const FollowingScreen = ({ navigation }) => {
         label="Add Friend"
         onPress={() => navigation.navigate("Add friend")}
       />
-      {users && <FriendsList array={users} />}
+      {users && <FriendsList array={users}>{navigation}</FriendsList>}
     </View>
   );
 };
