@@ -29,7 +29,7 @@ const SignUpScreen = ({ navigation }) => {
               longitude: 12.10431258830776,
             },
             imageUrl: "",
-            following: [""],
+            following: [],
           });
         console.log(res);
       })
