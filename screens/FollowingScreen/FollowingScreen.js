@@ -24,7 +24,11 @@ const FollowingScreen = ({ navigation }) => {
   const getUsers = async () => {
     let userList = [];
 
-    if (followingList.length <= 0) return;
+    if (followingList.length == 0) {
+      setUsers(null);
+      setUpdated(false);
+      return;
+    }
     try {
       const users = await firebase
         .firestore()
