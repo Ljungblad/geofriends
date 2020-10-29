@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, FlatList } from "react-native";
+import { View } from "react-native";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import FriendsList from "../../components/FriendsList/FriendsList";
 import styles from "./styles";
 import firebase from "../../FirebaseConfig";
 
 const FollowingScreen = ({ navigation }) => {
-  // CLEAN UP CODE
   const [users, setUsers] = useState(null);
   const [followingList, setFollowingList] = useState([]);
-  const userId = firebase.auth().currentUser.uid;
-  const currentUserRef = firebase.firestore().collection("users").doc(userId);
-  const userData = currentUserRef.get();
-  let userList = [];
   const [updated, setUpdated] = useState(false);
 
   const getFollowingList = () => {
+    const userId = firebase.auth().currentUser.uid;
+    const currentUserRef = firebase.firestore().collection("users").doc(userId);
+
     return currentUserRef.onSnapshot((snapshot) => {
       const userFollowList = snapshot.data().following;
       setFollowingList(userFollowList);
@@ -24,6 +22,8 @@ const FollowingScreen = ({ navigation }) => {
   };
 
   const getUsers = async () => {
+    let userList = [];
+
     if (followingList.length <= 0) return;
     try {
       const users = await firebase
@@ -57,7 +57,7 @@ const FollowingScreen = ({ navigation }) => {
         label="Add Friend"
         onPress={() => navigation.navigate("Add friend")}
       />
-      {users && <FriendsList array={users}>{navigation}</FriendsList>}
+      {users && <FriendsList array={users} />}
     </View>
   );
 };
