@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { Text, View } from "react-native";
+import { Text, View, Button } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from "react-native-maps";
 import * as Location from "expo-location";
 import styles from "./styles";
 import firebase from "../../FirebaseConfig";
 
+// COMPONENTS
+import MapButton from '../../components/MapButton/MapButton';
+
 //ICONS
-import { Feather } from "@expo/vector-icons";
-import { Fontisto } from "@expo/vector-icons";
-import { Octicons } from "@expo/vector-icons";
+import { Feather, FontAwesome5, FontAwesome, Octicons, Fontisto } from "@expo/vector-icons";
 
 const MapScreen = () => {
   const [location, setLocation] = useState(null);
   const [users, setUsers] = useState(null);
   const [updated, setUpdated] = useState(false);
   const [followingList, setFollowingList] = useState([]);
-
   const userId = firebase.auth().currentUser.uid;
   const currentUserRef = firebase.firestore().collection("users").doc(userId);
 
@@ -24,6 +24,7 @@ const MapScreen = () => {
       "location.latitude": location.coords.latitude,
       "location.longitude": location.coords.longitude,
     });
+    console.log('update location');
   };
 
   const getFollowingList = () => {
@@ -69,71 +70,91 @@ const MapScreen = () => {
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
       getFollowingList();
+      updateLocation();
     })();
   }, []);
-
-  if (location) {
-    updateLocation();
-  }
+ 
+  // if (location) {
+  //   updateLocation();
+  //   console.log('update location');
+  // }
 
   if (updated) {
     getUsers();
   }
 
+  const refreshMap = async () => {
+    let location = await Location.getCurrentPositionAsync({});
+    setLocation(location);
+    getUsers();
+    updateLocation();
+    console.log('refreshed');
+  }
+
   return (
     <View style={styles.container}>
       {location !== null ? (
-        <MapView
-          provider={PROVIDER_GOOGLE}
-          style={styles.mapStyle}
-          // showsUserLocation={true}
-          initialRegion={{
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-          loadingEnabled={true}
-          strokeWidth={1}
-        >
-          {users &&
-            users.map((user, i) => (
-              <Marker
-                coordinate={{
-                  latitude: user.location.latitude,
-                  longitude: user.location.longitude,
-                }}
-                key={i}
-              >
-                <Octicons name="person" size={24} color="black" />
-                <Callout>
-                  <Text>{user.name}</Text>
-                </Callout>
-              </Marker>
-            ))}
-          <Marker
-            coordinate={{
+        <View style={styles.mapContainer}>
+          <MapView
+            provider={PROVIDER_GOOGLE}
+            style={styles.mapStyle}
+            // showsUserLocation={true}
+            initialRegion={{
               latitude: location.coords.latitude,
               longitude: location.coords.longitude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
             }}
+            loadingEnabled={true}
+            strokeWidth={1}
           >
-            <Fontisto name="user-secret" size={24} color="black" />
-            <Callout>
-              <Text>Victor</Text>
-            </Callout>
-          </Marker>
-          <Marker
-            coordinate={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
-            }}
-          >
-            <Feather name="map-pin" size={50} color="black" />
-            <Callout>
-              <Text>ÖL</Text>
-            </Callout>
-          </Marker>
-        </MapView>
+            {users &&
+              users.map((user, i) => (
+                <Marker
+                  coordinate={{
+                    latitude: user.location.latitude,
+                    longitude: user.location.longitude,
+                  }}
+                  key={i}
+                >
+                  <Octicons name="person" size={24} color="black" />
+                  <Callout>
+                    <Text>{user.name}</Text>
+                  </Callout>
+                </Marker>
+              ))}
+            <Marker
+              coordinate={{
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+              }}
+            >
+              <Fontisto name="user-secret" size={24} color="black" />
+              <Callout>
+                <Text>Victor</Text>
+              </Callout>
+            </Marker>
+            <Marker
+              coordinate={{
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+              }}
+            >
+              <Feather name="map-pin" size={50} color="black" />
+              <Callout>
+                <Text>ÖL</Text>
+              </Callout>
+            </Marker>
+          </MapView>
+          <View style={styles.buttonWrapper}>
+            <MapButton onPress={refreshMap}>
+              <FontAwesome name="refresh" size={24} color="#4B4B4B" />
+            </MapButton>
+            <MapButton onPress={() => console.log('add pin')}>
+              <FontAwesome5 name="map-pin" size={24} color="#4B4B4B" />            
+            </MapButton>
+          </View>
+        </View>
       ) : (
         <Text>Loading...</Text>
       )}

@@ -7,8 +7,17 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  mapContainer: {
+    position: 'relative',
+
+  },
   mapStyle: {
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
+  },
+  buttonWrapper: {
+    position: 'absolute',
+    right: 20,
+    top: 80,
   },
 });
