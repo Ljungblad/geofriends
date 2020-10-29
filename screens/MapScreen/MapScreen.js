@@ -12,10 +12,10 @@ import { Octicons } from "@expo/vector-icons";
 
 const MapScreen = () => {
   const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
   const [users, setUsers] = useState(null);
+  const [updated, setUpdated] = useState(false);
+  const [followingList, setFollowingList] = useState([]);
 
-  let userList = [];
   const userId = firebase.auth().currentUser.uid;
   const currentUserRef = firebase.firestore().collection("users").doc(userId);
 
@@ -26,26 +26,37 @@ const MapScreen = () => {
     });
   };
 
-  const getFollowList = async () => {
-    const userData = await currentUserRef.get();
-    if (userData.exists) {
-      const followingList = userData.data().following;
-      if (followingList.length <= 0) return;
-      try {
-        const users = await firebase
-          .firestore()
-          .collection("users")
-          .where("id", "in", followingList)
-          .get();
+  const getFollowingList = () => {
+    return currentUserRef.onSnapshot((snapshot) => {
+      const userFollowList = snapshot.data().following;
+      setFollowingList(userFollowList);
+      setUpdated(true);
+    });
+  };
 
-        users.forEach((user) => {
-          const data = user.data();
-          userList.push(data);
-        });
-        setUsers(userList);
-      } catch (e) {
-        console.error(e);
-      }
+  const getUsers = async () => {
+    let userList = [];
+
+    if (followingList.length == 0) {
+      setUsers(null);
+      setUpdated(false);
+      return;
+    }
+    try {
+      const users = await firebase
+        .firestore()
+        .collection("users")
+        .where("id", "in", followingList)
+        .get();
+
+      users.forEach((user) => {
+        const data = user.data();
+        userList.push(data);
+      });
+      setUsers(userList);
+      setUpdated(false);
+    } catch (e) {
+      console.error(e);
     }
   };
 
@@ -57,7 +68,7 @@ const MapScreen = () => {
       }
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      getFollowList();
+      getFollowingList();
     })();
   }, []);
 
@@ -65,11 +76,8 @@ const MapScreen = () => {
     updateLocation();
   }
 
-  let text = "Waiting..";
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
+  if (updated) {
+    getUsers();
   }
 
   return (
