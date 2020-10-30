@@ -7,4 +7,8 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  title: {
+    fontFamily: "nunitoSans-bold",
+    fontSize: 20, 
+  }
 });

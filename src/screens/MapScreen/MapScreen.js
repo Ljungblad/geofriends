@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View } from "react-native";
+import { Text, View, ActivityIndicator } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from "react-native-maps";
 import * as Location from "expo-location";
 import styles from "./styles";
@@ -164,7 +164,9 @@ const MapScreen = () => {
           </View>
         </View>
       ) : (
-        <Text>Loading...</Text>
+        <View style={[globalStyles.container, styles.horizontal]}>
+          <ActivityIndicator size="large" color={colors.black}/>
+        </View>
       )}
     </View>
   );
