@@ -13,4 +13,9 @@ export default StyleSheet.create({
     right: 20,
     top: 80,
   },
+  horizontal: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+  },
 });
