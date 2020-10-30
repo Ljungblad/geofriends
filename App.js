@@ -1,12 +1,11 @@
-import React, {useState} from "react";
-import TabNavigator from "./routes/TabNavigator";
-import AuthNavigator from "./routes/AuthNavigator";
+import React, { useState } from "react";
+import TabNavigator from "./src/routes/TabNavigator";
+import AuthNavigator from "./src/routes/AuthNavigator";
 import { NavigationContainer } from "@react-navigation/native";
 import firebase from "./FirebaseConfig";
 
 export default function App() {
   const [user, setUser] = useState();
-  // console.log(user);
 
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -20,5 +19,5 @@ export default function App() {
     <NavigationContainer>
       {user ? <TabNavigator /> : <AuthNavigator />}
     </NavigationContainer>
-  )
+  );
 }
