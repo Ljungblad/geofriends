@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Modal } from "react-native";
+import { Text, View, Alert } from "react-native";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import InputField from "../../components/InputField/InputField";
 import CloseButton from "../../components/CloseButton/CloseButton";
-import styles from "./styles";
+import globalStyles from "../../styles/globalStyles";
 import firebase from "../../../FirebaseConfig";
 
 const AddFriendModal = ({ navigation }) => {
@@ -18,7 +18,7 @@ const AddFriendModal = ({ navigation }) => {
     await currentUserRef.update({
       following: firebase.firestore.FieldValue.arrayUnion(userId),
     });
-    await alert("Firend was added!");
+    await Alert.alert("Success!", "Firend was added!");
     await navigation.goBack();
   };
 
@@ -40,12 +40,8 @@ const AddFriendModal = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <CloseButton
-        style={styles.closeButton}
-        onPress={() => navigation.goBack()}
-        size={30}
-      />
+    <View style={globalStyles.container}>
+      <CloseButton onPress={() => navigation.goBack()} size={30} />
       <Text>Follow a friend by adding their email</Text>
       <InputField
         label="Enter email"

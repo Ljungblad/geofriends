@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { Text, View } from "react-native";
+import React, { useState } from "react";
+import { View } from "react-native";
 import InputField from "../../components/InputField/InputField";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
-import styles from "./styles";
+import globalStyles from "../../styles/globalStyles";
 import firebase from "../../../FirebaseConfig";
 
 const ChangePasswordScreen = ({ navigation }) => {
@@ -38,7 +38,7 @@ const ChangePasswordScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       <InputField
         label="Current password"
         placeholder="Enter your current password"

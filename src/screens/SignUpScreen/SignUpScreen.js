@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Text, View, TextInput, Button } from "react-native";
 import InputField from "../../components/InputField/InputField";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
-import styles from "./styles";
+import globalStyles from "../../styles/globalStyles";
 import firebase from "../../../FirebaseConfig";
 
 const SignUpScreen = ({ navigation }) => {
@@ -38,7 +38,7 @@ const SignUpScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       <Text>Sign up</Text>
       <InputField
         label="Name"

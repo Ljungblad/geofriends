@@ -1,10 +1,3 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet } from "react-native";
 
-export default StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#FFF",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+export default StyleSheet.create({});

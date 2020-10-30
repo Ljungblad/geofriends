@@ -4,6 +4,7 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import FriendsList from "../../components/FriendsList/FriendsList";
 import styles from "./styles";
 import firebase from "../../../FirebaseConfig";
+import globalStyles from "../../styles/globalStyles";
 
 const FollowingScreen = ({ navigation }) => {
   const [users, setUsers] = useState(null);
@@ -61,7 +62,7 @@ const FollowingScreen = ({ navigation }) => {
         label="Add Friend"
         onPress={() => navigation.navigate("Add friend")}
       />
-      {users && <FriendsList array={users} />}
+      {users && <FriendsList data={users} />}
     </View>
   );
 };

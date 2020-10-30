@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import InputField from "../../components/InputField/InputField";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
-import styles from "./styles";
+import globalStyles from "../../styles/globalStyles";
 import firebase from "../../../FirebaseConfig";
 
 const DeleteAccountScreen = () => {
@@ -47,7 +47,7 @@ const DeleteAccountScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       <InputField
         label="Password"
         placeholder="Enter your password"

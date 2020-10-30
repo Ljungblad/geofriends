@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Button } from "react-native";
+import { Text, View } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from "react-native-maps";
 import * as Location from "expo-location";
 import styles from "./styles";
+import globalStyles from "../../styles/globalStyles";
 import firebase from "../../../FirebaseConfig";
 import colors from "../../styles/colors";
 
@@ -99,7 +100,7 @@ const MapScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       {location !== null ? (
         <View style={styles.mapContainer}>
           <MapView

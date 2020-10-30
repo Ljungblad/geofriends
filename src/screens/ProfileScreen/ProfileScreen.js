@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, Button } from "react-native";
-import styles from "./styles";
+import globalStyles from "../../styles/globalStyles";
 import firebase from "../../../FirebaseConfig";
 
 const ProfileScreen = ({ navigation }) => {
   return (
-    <View style={styles.container}>
+    <View style={globalStyles.container}>
       <Text>Profile Screen</Text>
       <Button
         title="Change Password"
