@@ -5,9 +5,9 @@ import firebase from "../../../FirebaseConfig";
 import * as ImagePicker from "expo-image-picker";
 
 const ProfileScreen = ({ navigation }) => {
-  const [profileImage, setProfileImage] = useState(null);
   const [userName, setUserName] = useState(null);
   const userId = firebase.auth().currentUser.uid;
+  const [profileImage, setProfileImage] = useState(null);
 
   const getCurrentUser = async () => {
     const currentUserData = await firebase
@@ -70,10 +70,14 @@ const ProfileScreen = ({ navigation }) => {
 
   return (
     <View style={globalStyles.container}>
-      <Text>Welcome {userName}</Text>
+      {userName && (
+        <Text>Welcome {userName}</Text>
+      )}
       <Button title="Upload profile picture" onPress={openImagePickerAsync} />
-      {profileImage && (
+      {profileImage !== "" ? (
         <Image source={{ uri: profileImage, width: 200, height: 200 }} />
+      ) : (
+        <Image source={require("../../../assets/images/default.jpg")} style={{height: 200, width: 200}} />
       )}
       <Button
         title="Change Password"
