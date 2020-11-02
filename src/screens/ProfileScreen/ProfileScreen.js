@@ -5,14 +5,31 @@ import firebase from "../../../FirebaseConfig";
 import * as ImagePicker from "expo-image-picker";
 
 const ProfileScreen = ({ navigation }) => {
-  const [image, setImage] = useState(null);
+  const [profileImage, setProfileImage] = useState(null);
+  const [userName, setUserName] = useState(null);
   const userId = firebase.auth().currentUser.uid;
 
-  const uploadImage = async (file) => {
-    const storageRef = firebase.storage().ref("images");
+  const getCurrentUser = async () => {
+    const currentUserData = await firebase
+      .firestore()
+      .collection("users")
+      .doc(userId)
+      .get();
 
-    const fileRef = storageRef.child(`${userId}`);
-    await fileRef.putString(file.uri);
+    setUserName(currentUserData.data().name);
+    setProfileImage(currentUserData.data().imageUrl);
+  };
+
+  const uploadImage = async (file) => {
+    const response = await fetch(file.uri);
+    const blob = await response.blob();
+    const storageRef = firebase.storage().ref("images");
+    const fileRef = storageRef.child(`${userId}.jpg`);
+    const metadata = {
+      contentType: "image/jpeg",
+    };
+
+    await fileRef.put(blob, metadata);
     const fileUrl = await fileRef.getDownloadURL();
 
     await firebase
@@ -35,24 +52,28 @@ const ProfileScreen = ({ navigation }) => {
       return;
     }
 
-    // const options = { quality: 0.5, base64: true };
+    const options = { quality: 0.3 };
 
-    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    let pickerResult = await ImagePicker.launchImageLibraryAsync(options);
 
     if (pickerResult.cancelled === true) {
       return;
     }
 
-    setImage(pickerResult.uri);
     await uploadImage(pickerResult);
+    setProfileImage(pickerResult.uri);
   };
+
+  useEffect(() => {
+    getCurrentUser();
+  }, []);
 
   return (
     <View style={globalStyles.container}>
-      <Text>Profile Screen</Text>
+      <Text>Welcome {userName}</Text>
       <Button title="Upload profile picture" onPress={openImagePickerAsync} />
-      {image && (
-        <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+      {profileImage && (
+        <Image source={{ uri: profileImage, width: 200, height: 200 }} />
       )}
       <Button
         title="Change Password"
