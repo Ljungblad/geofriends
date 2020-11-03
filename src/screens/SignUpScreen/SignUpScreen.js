@@ -29,6 +29,10 @@ const SignUpScreen = ({ navigation }) => {
             },
             imageUrl: "",
             following: [],
+            pin: {
+              isActive: false,
+              description: "",
+            },
           });
         console.log(res);
       })

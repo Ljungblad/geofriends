@@ -11,11 +11,7 @@ import colors from "../../styles/colors";
 import MapButton from "../../components/MapButton/MapButton";
 
 //ICONS
-import {
-  Feather,
-  FontAwesome5,
-  FontAwesome,
-} from "@expo/vector-icons";
+import { Feather, FontAwesome5, FontAwesome } from "@expo/vector-icons";
 
 const MapScreen = () => {
   const [location, setLocation] = useState(null);
@@ -27,7 +23,6 @@ const MapScreen = () => {
   const currentUserRef = firebase.firestore().collection("users").doc(userId);
 
   const updateLocation = async (location) => {
-    console.log(location);
     await currentUserRef.update({
       "location.latitude": location.coords.latitude,
       "location.longitude": location.coords.longitude,
@@ -38,10 +33,9 @@ const MapScreen = () => {
   const getFollowingList = () => {
     return currentUserRef.onSnapshot((snapshot) => {
       const userFollowList = snapshot.data().following;
+      const currentUserData = snapshot.data();
       setFollowingList(userFollowList);
       setUpdated(true);
-
-      const currentUserData = snapshot.data();
       setCurrentUser(currentUserData);
     });
   };
@@ -81,8 +75,6 @@ const MapScreen = () => {
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
       getFollowingList();
-      console.log(location);
-
       updateLocation(location);
     })();
   }, []);
@@ -98,7 +90,6 @@ const MapScreen = () => {
     updateLocation(location);
     console.log("refreshed");
   };
-
 
   return (
     <View style={globalStyles.container}>
@@ -127,12 +118,35 @@ const MapScreen = () => {
                   key={i}
                 >
                   {user.imageUrl !== "" ? (
-                    <Image source={{ uri: user.imageUrl }} style={styles.image} />
+                    <Image
+                      source={{ uri: user.imageUrl }}
+                      style={styles.image}
+                    />
                   ) : (
-                    <Image source={require("../../../assets/images/default.jpg")} style={styles.image} />
+                    <Image
+                      source={require("../../../assets/images/default.jpg")}
+                      style={styles.image}
+                    />
                   )}
-                  <Callout>
+
+                  <Callout
+                    style={{
+                      flex: 1,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      position: "absolute",
+                      padding: 5,
+                      width: 100,
+                      height: "auto",
+                      backgroundColor: colors.secondary,
+                    }}
+                  >
                     <Text>{user.name}</Text>
+                    {user.pin.isActive && (
+                      <Text style={{ color: colors.white }}>
+                        {user.pin.description}
+                      </Text>
+                    )}
                   </Callout>
                 </Marker>
               ))}
@@ -142,13 +156,30 @@ const MapScreen = () => {
                 longitude: location.coords.longitude,
               }}
             >
-              <Feather name="map-pin" size={40} color={colors.black} />
+              <FontAwesome5 name="map-pin" size={50} color={colors.black} />
+              {/* <Feather name="map-pin" size={50} color={colors.black} /> */}
               {currentUser && currentUser.imageUrl !== "" ? (
-                <Image source={{ uri: currentUser.imageUrl }} style={styles.image} />
+                <Image
+                  source={{ uri: currentUser.imageUrl }}
+                  style={styles.image}
+                />
               ) : (
-                <Image source={require("../../../assets/images/default.jpg")} style={styles.image} />
+                <Image
+                  source={require("../../../assets/images/default.jpg")}
+                  style={styles.image}
+                />
               )}
-              <Callout style={{ flex: 1, position: 'relative', flexWrap: "wrap" }}>
+              <Callout
+                style={{
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  position: "absolute",
+                  padding: 5,
+                  width: 100,
+                  height: "auto",
+                }}
+              >
                 <Text>{currentUser && currentUser.name}</Text>
                 <Text>Kom hit och drick öl!</Text>
               </Callout>
@@ -165,7 +196,7 @@ const MapScreen = () => {
         </View>
       ) : (
         <View style={[globalStyles.container, styles.horizontal]}>
-          <ActivityIndicator size="large" color={colors.black}/>
+          <ActivityIndicator size="large" color={colors.black} />
         </View>
       )}
     </View>

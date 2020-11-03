@@ -14,14 +14,16 @@ export default StyleSheet.create({
     top: 80,
   },
   horizontal: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    justifyContent: "space-around",
     padding: 10,
   },
   image: {
-    width: 40,
-    height: 40,
-    borderRadius: 40,
+    width: 50,
+    height: 50,
+    borderRadius: 50,
     backgroundColor: "#aaa",
+    borderColor: "#FFF",
+    borderWidth: 2,
   },
 });
