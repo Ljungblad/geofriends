@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, ActivityIndicator } from "react-native";
+import { Text, View, ActivityIndicator, Image } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from "react-native-maps";
 import * as Location from "expo-location";
 import styles from "./styles";
@@ -12,22 +12,21 @@ import MapButton from "../../components/MapButton/MapButton";
 
 //ICONS
 import {
-  Feather,
   FontAwesome5,
   FontAwesome,
-  Octicons,
-  Fontisto,
 } from "@expo/vector-icons";
 
 const MapScreen = () => {
   const [location, setLocation] = useState(null);
   const [users, setUsers] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
   const [updated, setUpdated] = useState(false);
   const [followingList, setFollowingList] = useState([]);
   const userId = firebase.auth().currentUser.uid;
   const currentUserRef = firebase.firestore().collection("users").doc(userId);
 
-  const updateLocation = async () => {
+  const updateLocation = async (location) => {
+    console.log(location);
     await currentUserRef.update({
       "location.latitude": location.coords.latitude,
       "location.longitude": location.coords.longitude,
@@ -40,6 +39,9 @@ const MapScreen = () => {
       const userFollowList = snapshot.data().following;
       setFollowingList(userFollowList);
       setUpdated(true);
+
+      const currentUserData = snapshot.data();
+      setCurrentUser(currentUserData);
     });
   };
 
@@ -73,15 +75,18 @@ const MapScreen = () => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
       if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
+        alert("Permission to access location was denied");
       }
       let location = await Location.getCurrentPositionAsync({});
       setLocation(location);
-      // getFollowingList();
-      // updateLocation();
+      getFollowingList();
+      console.log(location);
+
+      updateLocation(location);
     })();
   }, []);
 
+  // Not needed? Remove?
   // if (location) {
   //   updateLocation();
   //   console.log('update location');
@@ -95,9 +100,10 @@ const MapScreen = () => {
     let location = await Location.getCurrentPositionAsync({});
     setLocation(location);
     getUsers();
-    updateLocation();
+    updateLocation(location);
     console.log("refreshed");
   };
+
 
   return (
     <View style={globalStyles.container}>
@@ -125,7 +131,11 @@ const MapScreen = () => {
                   }}
                   key={i}
                 >
-                  <Octicons name="person" size={24} color={colors.black} />
+                  {user.imageUrl !== "" ? (
+                    <Image source={{ uri: user.imageUrl }} style={styles.image} />
+                  ) : (
+                    <Image source={require("../../../assets/images/default.jpg")} style={styles.image} />
+                  )}
                   <Callout>
                     <Text>{user.name}</Text>
                   </Callout>
@@ -137,12 +147,16 @@ const MapScreen = () => {
                 longitude: location.coords.longitude,
               }}
             >
-              <Fontisto name="user-secret" size={24} color={colors.black} />
+              {currentUser && currentUser.imageUrl !== "" ? (
+                    <Image source={{ uri: currentUser.imageUrl }} style={styles.image} />
+                  ) : (
+                    <Image source={require("../../../assets/images/default.jpg")} style={styles.image} />
+                  )}
               <Callout>
-                <Text>Victor</Text>
+                <Text>{currentUser && currentUser.name}</Text>
               </Callout>
             </Marker>
-            <Marker
+            {/* <Marker
               coordinate={{
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude,
@@ -152,7 +166,7 @@ const MapScreen = () => {
               <Callout>
                 <Text>ÖL</Text>
               </Callout>
-            </Marker>
+            </Marker> */}
           </MapView>
           <View style={styles.buttonWrapper}>
             <MapButton onPress={refreshMap}>

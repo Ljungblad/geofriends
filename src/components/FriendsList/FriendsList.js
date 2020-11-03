@@ -10,7 +10,7 @@ const FriendsList = ({ data }) => {
         style={styles.list}
         data={data}
         renderItem={({ item }) => (
-          <FriendsListItem name={item.name} userId={item.id} />
+          <FriendsListItem name={item.name} userId={item.id} imageUrl={item.imageUrl} />
         )}
       />
     </View>
