@@ -12,6 +12,7 @@ import MapButton from "../../components/MapButton/MapButton";
 
 //ICONS
 import {
+  Feather,
   FontAwesome5,
   FontAwesome,
 } from "@expo/vector-icons";
@@ -86,12 +87,6 @@ const MapScreen = () => {
     })();
   }, []);
 
-  // Not needed? Remove?
-  // if (location) {
-  //   updateLocation();
-  //   console.log('update location');
-  // }
-
   if (updated) {
     getUsers();
   }
@@ -147,26 +142,17 @@ const MapScreen = () => {
                 longitude: location.coords.longitude,
               }}
             >
+              <Feather name="map-pin" size={40} color={colors.black} />
               {currentUser && currentUser.imageUrl !== "" ? (
-                    <Image source={{ uri: currentUser.imageUrl }} style={styles.image} />
-                  ) : (
-                    <Image source={require("../../../assets/images/default.jpg")} style={styles.image} />
-                  )}
-              <Callout>
+                <Image source={{ uri: currentUser.imageUrl }} style={styles.image} />
+              ) : (
+                <Image source={require("../../../assets/images/default.jpg")} style={styles.image} />
+              )}
+              <Callout style={{ flex: 1, position: 'relative', flexWrap: "wrap" }}>
                 <Text>{currentUser && currentUser.name}</Text>
+                <Text>Kom hit och drick öl!</Text>
               </Callout>
             </Marker>
-            {/* <Marker
-              coordinate={{
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude,
-              }}
-            >
-              <Feather name="map-pin" size={50} color={colors.black} />
-              <Callout>
-                <Text>ÖL</Text>
-              </Callout>
-            </Marker> */}
           </MapView>
           <View style={styles.buttonWrapper}>
             <MapButton onPress={refreshMap}>
