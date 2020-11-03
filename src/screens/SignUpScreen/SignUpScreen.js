@@ -9,7 +9,6 @@ const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  // const [defaultImageUrl, setDefaultImageUrl] = useState("");
 
   const handleSignUp = () => {
     firebase
@@ -37,15 +36,6 @@ const SignUpScreen = ({ navigation }) => {
         console.error(error);
       });
   };
-
-  // useEffect(() => {
-  //   (async () => {
-  //     const storageRef = firebase.storage().ref("images");
-  //     const fileRef = storageRef.child("default.jpg");
-  //     const fileUrl = await fileRef.getDownloadURL();
-  //     setDefaultImageUrl(fileUrl);
-  //   })();
-  // }, []);
 
   return (
     <View style={globalStyles.container}>

@@ -18,4 +18,10 @@ export default StyleSheet.create({
     justifyContent: 'space-around',
     padding: 10,
   },
+  image: {
+    width: 40,
+    height: 40,
+    borderRadius: 40,
+    backgroundColor: "#aaa",
+  },
 });
