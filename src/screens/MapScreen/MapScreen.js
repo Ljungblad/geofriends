@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, ActivityIndicator, Image } from "react-native";
+import {
+  Text,
+  View,
+  ActivityIndicator,
+  Image,
+  Animated,
+  Easing,
+} from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from "react-native-maps";
 import * as Location from "expo-location";
 import styles from "./styles";
@@ -24,6 +31,27 @@ const MapScreen = () => {
   const userId = firebase.auth().currentUser.uid;
   const currentUserRef = firebase.firestore().collection("users").doc(userId);
 
+  //ROTATES THE REFRESHING ICON
+  let rotateValue = new Animated.Value(0);
+
+  const rotationAnimation = () => {
+    rotateValue.setValue(0);
+    Animated.loop(
+      Animated.timing(rotateValue, {
+        toValue: 1,
+        duration: 1000,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      })
+    ).start();
+  };
+
+  const RotateData = rotateValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["0deg", "360deg"],
+  });
+
+  // UPDATES THE CURRENT USERS LOCATION TO DATABASE
   const updateLocation = async (location) => {
     await currentUserRef.update({
       "location.latitude": location.coords.latitude,
@@ -32,6 +60,7 @@ const MapScreen = () => {
     console.log("update location");
   };
 
+  // COLLECTS THE CURRENT USERS FOLLOWING LIST AND USER DATA
   const getFollowingList = () => {
     return currentUserRef.onSnapshot((snapshot) => {
       const userFollowList = snapshot.data().following;
@@ -42,6 +71,7 @@ const MapScreen = () => {
     });
   };
 
+  // COLLECTS USER DATA FROM THE CURRENT USERS FOLLOWING LIST
   const getUsers = async () => {
     let userList = [];
 
@@ -68,6 +98,7 @@ const MapScreen = () => {
     }
   };
 
+  // COLLECTS AND UPDATE THE CURRENT USERS LOCATION + DATA
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
@@ -85,6 +116,7 @@ const MapScreen = () => {
     getUsers();
   }
 
+  // COLLECTS THE USERS DATA AND LOCATION
   const refreshMap = async () => {
     let location = await Location.getCurrentPositionAsync({});
     setLocation(location);
@@ -93,6 +125,7 @@ const MapScreen = () => {
     console.log("refreshed");
   };
 
+  // REMOVES THE PIN FROM THE CURRENT USERS DATABASE
   const removePin = async () => {
     await currentUserRef.update({
       "pin.isActive": false,
@@ -183,23 +216,32 @@ const MapScreen = () => {
               </Marker>
             )}
           </MapView>
+
+          {/* MAKE A NEW COMPONENT CALLED MAPBUTTONS */}
+
           <View style={styles.buttonWrapper}>
-            <MapButton onPress={refreshMap}>
-              <FontAwesome name="refresh" size={24} color={colors.darkGrey} />
+            <MapButton
+              onPress={() => {
+                refreshMap();
+                rotationAnimation();
+              }}
+            >
+              <Animated.View style={{ transform: [{ rotate: RotateData }] }}>
+                <FontAwesome name="refresh" size={24} color={colors.darkGrey} />
+              </Animated.View>
             </MapButton>
-            {currentUser &&
-              currentUser.pin.isActive ? (
-                <MapButton onPress={removePin}>
-                  <FontAwesome name="remove" size={24} color={colors.darkGrey} />
-                </MapButton>
-              ) : (
-                <MapButton onPress={() => setIsOpen(true)}>
-                  <FontAwesome5
-                    name="map-pin"
-                    size={24}
-                    color={colors.darkGrey}
-                  />
-                </MapButton>
+            {currentUser && currentUser.pin.isActive ? (
+              <MapButton onPress={removePin}>
+                <FontAwesome name="remove" size={24} color={colors.darkGrey} />
+              </MapButton>
+            ) : (
+              <MapButton onPress={() => setIsOpen(true)}>
+                <FontAwesome5
+                  name="map-pin"
+                  size={24}
+                  color={colors.darkGrey}
+                />
+              </MapButton>
             )}
           </View>
           <CreatePinModal
@@ -211,6 +253,7 @@ const MapScreen = () => {
           />
         </View>
       ) : (
+        // MAKE A NEW COMPONENT CALLED LOADER
         <View style={[globalStyles.container, styles.horizontal]}>
           <ActivityIndicator size="large" color={colors.black} />
         </View>
