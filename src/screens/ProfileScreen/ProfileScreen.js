@@ -4,6 +4,7 @@ import * as ImagePicker from "expo-image-picker";
 import firebase from "../../../FirebaseConfig";
 import globalStyles from "../../styles/globalStyles";
 import styles from "./styles";
+import SecondaryButton from "../../components/SecondaryButton/SecondayButton";
 
 const ProfileScreen = ({ navigation }) => {
   const [userName, setUserName] = useState(null);
@@ -41,7 +42,7 @@ const ProfileScreen = ({ navigation }) => {
         imageUrl: fileUrl,
       })
       .then(() => {
-        console.log("Updated to database");
+        console.log("Updated image to database");
       });
   };
 
@@ -70,8 +71,7 @@ const ProfileScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <View style={globalStyles.container}>
-      <Button title="Upload profile picture" onPress={openImagePickerAsync} />
+    <View style={styles.container}>
       
       {profileImage !== "" ? (
         <Image source={{ uri: profileImage }} style={styles.profileImage} />
@@ -82,30 +82,34 @@ const ProfileScreen = ({ navigation }) => {
         />
       )}
 
-      {userName && <Text style={styles.name}>{userName}</Text>}
+      <SecondaryButton label="Upload profile picture" onPress={openImagePickerAsync} />
 
-      <Button
-        title="Change Password"
-        onPress={() => navigation.navigate("Change Password")}
-      />
-      <Button
-        title="Delete Account"
-        onPress={() => navigation.navigate("Delete Account")}
-      />
-      <Button
-        title="Logout"
-        onPress={() => {
-          firebase
-            .auth()
-            .signOut()
-            .then(() => {
-              console.log("it worked");
-            })
-            .catch((error) => {
-              console.log(error);
-            });
-        }}
-      />
+      {userName && <Text style={globalStyles.title}>{userName}</Text>}
+
+      <View style={styles.buttonContainer}>
+        <SecondaryButton 
+          label="Change Password" 
+          onPress={() => navigation.navigate("Change Password")} 
+        />
+        <SecondaryButton 
+          label="Delete Account" 
+          onPress={() => navigation.navigate("Delete Account")} 
+        />
+        <SecondaryButton 
+          label="Logout" 
+          onPress={() => {
+            firebase
+              .auth()
+              .signOut()
+              .then(() => {
+                console.log("it worked");
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }} 
+        />
+      </View>
     </View>
   );
 };
