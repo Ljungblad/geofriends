@@ -70,14 +70,15 @@ const ProfileScreen = ({ navigation }) => {
 
   return (
     <View style={globalStyles.container}>
-      {userName && (
-        <Text>Welcome {userName}</Text>
-      )}
+      {userName && <Text>Welcome {userName}</Text>}
       <Button title="Upload profile picture" onPress={openImagePickerAsync} />
       {profileImage !== "" ? (
         <Image source={{ uri: profileImage, width: 200, height: 200 }} />
       ) : (
-        <Image source={require("../../../assets/images/default.jpg")} style={{height: 200, width: 200}} />
+        <Image
+          source={require("../../../assets/images/default.jpg")}
+          style={{ height: 200, width: 200 }}
+        />
       )}
       <Button
         title="Change Password"
