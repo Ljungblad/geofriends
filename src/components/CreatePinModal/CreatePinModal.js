@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button } from "react-native";
+import { View, Text, TextInput, Button, Alert } from "react-native";
 import styles from "./styles";
 import Modal from "react-native-modalbox";
 import SubmitButton from "../SubmitButton/SubmitButton";
+import CloseButton from "../CloseButton/CloseButton";
 import firebase from "../../../FirebaseConfig";
 
 const CreatePinModal = ({ isOpen, onClosed }) => {
@@ -27,15 +28,13 @@ const CreatePinModal = ({ isOpen, onClosed }) => {
       onClosed={onClosed}
       coverScreen={true}
     >
-      <Text>This is a modal</Text>
-      <Button
-        style={styles.btn}
-        title="Close"
+      <CloseButton
+        size={30}
         onPress={() => {
-          console.log("setPin");
+          console.log("close");
           onClosed();
         }}
-      ></Button>
+      />
       <View style={styles.inputWrapepr}>
         <Text style={styles.label}>Description</Text>
         <TextInput
@@ -49,8 +48,12 @@ const CreatePinModal = ({ isOpen, onClosed }) => {
         <SubmitButton
           label="Add pin"
           onPress={() => {
-            updatePin();
-            onClosed();
+            if (description !== "") {
+              updatePin();
+              onClosed();
+            } else {
+              Alert.alert("Description is empty", "Please enter a description");
+            }
           }}
         />
       </View>

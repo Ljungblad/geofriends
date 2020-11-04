@@ -93,6 +93,13 @@ const MapScreen = () => {
     console.log("refreshed");
   };
 
+  const removePin = async () => {
+    await currentUserRef.update({
+      "pin.isActive": false,
+      "pin.description": "",
+    });
+  };
+
   return (
     <View style={globalStyles.container}>
       {location !== null ? (
@@ -178,9 +185,19 @@ const MapScreen = () => {
             <MapButton onPress={refreshMap}>
               <FontAwesome name="refresh" size={24} color={colors.darkGrey} />
             </MapButton>
-            <MapButton onPress={() => setIsOpen(true)}>
-              <FontAwesome5 name="map-pin" size={24} color={colors.darkGrey} />
-            </MapButton>
+            {currentUser.pin.isActive ? (
+              <MapButton onPress={removePin}>
+                <FontAwesome name="remove" size={24} color={colors.darkGrey} />
+              </MapButton>
+            ) : (
+              <MapButton onPress={() => setIsOpen(true)}>
+                <FontAwesome5
+                  name="map-pin"
+                  size={24}
+                  color={colors.darkGrey}
+                />
+              </MapButton>
+            )}
           </View>
           <CreatePinModal
             isOpen={isOpen}
