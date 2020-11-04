@@ -40,7 +40,6 @@ const CreatePinModal = ({ isOpen, onClosed }) => {
         <TextInput
           style={styles.input}
           placeholder="What do you wanna share?"
-          autoCapitalize="none"
           onChangeText={(description) => setDescription(description)}
           numberOfLines={10}
           multiline={true}

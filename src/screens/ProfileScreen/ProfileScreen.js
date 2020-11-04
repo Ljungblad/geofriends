@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, Button, Image } from "react-native";
-import globalStyles from "../../styles/globalStyles";
-import firebase from "../../../FirebaseConfig";
 import * as ImagePicker from "expo-image-picker";
+import firebase from "../../../FirebaseConfig";
+import globalStyles from "../../styles/globalStyles";
+import styles from "./styles";
 
 const ProfileScreen = ({ navigation }) => {
   const [userName, setUserName] = useState(null);
@@ -70,16 +71,19 @@ const ProfileScreen = ({ navigation }) => {
 
   return (
     <View style={globalStyles.container}>
-      {userName && <Text>Welcome {userName}</Text>}
       <Button title="Upload profile picture" onPress={openImagePickerAsync} />
+      
       {profileImage !== "" ? (
-        <Image source={{ uri: profileImage, width: 200, height: 200 }} />
+        <Image source={{ uri: profileImage }} style={styles.profileImage} />
       ) : (
         <Image
-          source={require("../../../assets/images/default.jpg")}
-          style={{ height: 200, width: 200 }}
+        source={require("../../../assets/images/default.jpg")}
+        style={styles.profileImage}
         />
       )}
+
+      {userName && <Text style={styles.name}>{userName}</Text>}
+
       <Button
         title="Change Password"
         onPress={() => navigation.navigate("Change Password")}

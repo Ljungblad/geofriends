@@ -48,6 +48,7 @@ const SignUpScreen = ({ navigation }) => {
         label="Name"
         placeholder="Your name"
         onChangeText={(name) => setName(name)}
+        autoCapitalize="words"
       />
       <InputField
         label="Email"
