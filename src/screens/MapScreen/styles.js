@@ -26,4 +26,12 @@ export default StyleSheet.create({
     borderColor: "#FFF",
     borderWidth: 2,
   },
+  callout: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    position: "absolute",
+    padding: 5,
+    width: 100,
+  },
 });

@@ -117,6 +117,9 @@ const MapScreen = () => {
                   }}
                   key={i}
                 >
+                  {user.pin.isActive && (
+                    <Feather name="map-pin" size={50} color={colors.black} />
+                  )}
                   {user.imageUrl !== "" ? (
                     <Image
                       source={{ uri: user.imageUrl }}
@@ -129,61 +132,45 @@ const MapScreen = () => {
                     />
                   )}
 
-                  <Callout
-                    style={{
-                      flex: 1,
-                      alignItems: "center",
-                      justifyContent: "center",
-                      position: "absolute",
-                      padding: 5,
-                      width: 100,
-                      height: "auto",
-                      backgroundColor: colors.secondary,
-                    }}
-                  >
+                  <Callout style={styles.callout}>
                     <Text>{user.name}</Text>
                     {user.pin.isActive && (
-                      <Text style={{ color: colors.white }}>
+                      <Text style={{ color: colors.black }}>
                         {user.pin.description}
                       </Text>
                     )}
                   </Callout>
                 </Marker>
               ))}
-            <Marker
-              coordinate={{
-                latitude: location.coords.latitude,
-                longitude: location.coords.longitude,
-              }}
-            >
-              <FontAwesome5 name="map-pin" size={50} color={colors.black} />
-              {/* <Feather name="map-pin" size={50} color={colors.black} /> */}
-              {currentUser && currentUser.imageUrl !== "" ? (
-                <Image
-                  source={{ uri: currentUser.imageUrl }}
-                  style={styles.image}
-                />
-              ) : (
-                <Image
-                  source={require("../../../assets/images/default.jpg")}
-                  style={styles.image}
-                />
-              )}
-              <Callout
-                style={{
-                  flex: 1,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  position: "absolute",
-                  padding: 5,
-                  width: 100,
-                  height: "auto",
+            {currentUser && (
+              <Marker
+                coordinate={{
+                  latitude: location.coords.latitude,
+                  longitude: location.coords.longitude,
                 }}
               >
-                <Text>{currentUser && currentUser.name}</Text>
-                <Text>Kom hit och drick öl!</Text>
-              </Callout>
-            </Marker>
+                {currentUser.pin.isActive && (
+                  <Feather name="map-pin" size={50} color={colors.black} />
+                )}
+                {currentUser.imageUrl !== "" ? (
+                  <Image
+                    source={{ uri: currentUser.imageUrl }}
+                    style={styles.image}
+                  />
+                ) : (
+                  <Image
+                    source={require("../../../assets/images/default.jpg")}
+                    style={styles.image}
+                  />
+                )}
+                {
+                  <Callout style={styles.callout}>
+                    <Text>{currentUser.name}</Text>
+                    <Text>{currentUser.pin.description}</Text>
+                  </Callout>
+                }
+              </Marker>
+            )}
           </MapView>
           <View style={styles.buttonWrapper}>
             <MapButton onPress={refreshMap}>
