@@ -12,7 +12,7 @@ import MapButton from "../../components/MapButton/MapButton";
 import CreatePinModal from "../../components/CreatePinModal/CreatePinModal";
 
 //ICONS
-import { Feather, FontAwesome5, FontAwesome } from "@expo/vector-icons";
+import { Feather, FontAwesome5, FontAwesome, Entypo } from "@expo/vector-icons";
 
 const MapScreen = () => {
   const [location, setLocation] = useState(null);
@@ -127,7 +127,8 @@ const MapScreen = () => {
                   key={i}
                 >
                   {user.pin.isActive && (
-                    <Feather name="map-pin" size={50} color={colors.black} />
+                    // <Feather name="map-pin" size={50} color={colors.black} />
+                    <Entypo name="location-pin" size={50} color="red" />
                   )}
                   {user.imageUrl !== "" ? (
                     <Image
@@ -159,7 +160,8 @@ const MapScreen = () => {
                 }}
               >
                 {currentUser.pin.isActive && (
-                  <Feather name="map-pin" size={50} color={colors.black} />
+                  // <Feather name="map-pin" size={50} color={colors.black} />
+                  <Entypo name="location-pin" size={50} color="red" />
                 )}
                 {currentUser.imageUrl !== "" ? (
                   <Image
@@ -185,18 +187,19 @@ const MapScreen = () => {
             <MapButton onPress={refreshMap}>
               <FontAwesome name="refresh" size={24} color={colors.darkGrey} />
             </MapButton>
-            {currentUser.pin.isActive ? (
-              <MapButton onPress={removePin}>
-                <FontAwesome name="remove" size={24} color={colors.darkGrey} />
-              </MapButton>
-            ) : (
-              <MapButton onPress={() => setIsOpen(true)}>
-                <FontAwesome5
-                  name="map-pin"
-                  size={24}
-                  color={colors.darkGrey}
-                />
-              </MapButton>
+            {currentUser &&
+              currentUser.pin.isActive ? (
+                <MapButton onPress={removePin}>
+                  <FontAwesome name="remove" size={24} color={colors.darkGrey} />
+                </MapButton>
+              ) : (
+                <MapButton onPress={() => setIsOpen(true)}>
+                  <FontAwesome5
+                    name="map-pin"
+                    size={24}
+                    color={colors.darkGrey}
+                  />
+                </MapButton>
             )}
           </View>
           <CreatePinModal
