@@ -9,6 +9,7 @@ import colors from "../../styles/colors";
 
 // COMPONENTS
 import MapButton from "../../components/MapButton/MapButton";
+import CreatePinModal from "../../components/CreatePinModal/CreatePinModal";
 
 //ICONS
 import { Feather, FontAwesome5, FontAwesome } from "@expo/vector-icons";
@@ -19,6 +20,7 @@ const MapScreen = () => {
   const [currentUser, setCurrentUser] = useState(null);
   const [updated, setUpdated] = useState(false);
   const [followingList, setFollowingList] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
   const userId = firebase.auth().currentUser.uid;
   const currentUserRef = firebase.firestore().collection("users").doc(userId);
 
@@ -176,10 +178,17 @@ const MapScreen = () => {
             <MapButton onPress={refreshMap}>
               <FontAwesome name="refresh" size={24} color={colors.darkGrey} />
             </MapButton>
-            <MapButton onPress={() => console.log("add pin")}>
+            <MapButton onPress={() => setIsOpen(true)}>
               <FontAwesome5 name="map-pin" size={24} color={colors.darkGrey} />
             </MapButton>
           </View>
+          <CreatePinModal
+            isOpen={isOpen}
+            onClosed={() => {
+              setIsOpen(false);
+              console.log("closed");
+            }}
+          />
         </View>
       ) : (
         <View style={[globalStyles.container, styles.horizontal]}>
