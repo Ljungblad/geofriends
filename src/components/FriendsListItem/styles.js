@@ -18,4 +18,9 @@ export default StyleSheet.create({
     borderRadius: 40,
     backgroundColor: "#aaa",
   },
+  buttonContainer: {
+    position: "absolute",
+    width: "98%",
+    alignItems: "flex-end",
+  },
 });
