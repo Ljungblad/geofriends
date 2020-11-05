@@ -15,7 +15,6 @@ const FriendsListItem = ({ name, userId, imageUrl }) => {
     await currentUserRef.update({
       following: firebase.firestore.FieldValue.arrayRemove(userId),
     });
-    await alert("Friend was removed!");
   };
 
   return (
