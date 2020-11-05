@@ -4,12 +4,13 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import FriendsList from "../../components/FriendsList/FriendsList";
 import styles from "./styles";
 import firebase from "../../../FirebaseConfig";
-import globalStyles from "../../styles/globalStyles";
+import AddFriendModal from "../../components/AddFriendModal/AddFriendModal";
 
 const FollowingScreen = ({ navigation }) => {
   const [users, setUsers] = useState(null);
   const [followingList, setFollowingList] = useState([]);
   const [updated, setUpdated] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const getFollowingList = () => {
     const userId = firebase.auth().currentUser.uid;
@@ -60,9 +61,17 @@ const FollowingScreen = ({ navigation }) => {
     <View style={styles.container}>
       <SubmitButton
         label="Add Friend"
-        onPress={() => navigation.navigate("Add friend")}
+        onPress={() => {
+          setIsOpen(true); 
+        }}
       />
       {users && <FriendsList data={users} />}
+      <AddFriendModal
+        isOpen={isOpen}
+        onClosed={() => {
+          setIsOpen(false);
+        }}
+      />
     </View>
   );
 };
