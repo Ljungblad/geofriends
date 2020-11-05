@@ -18,8 +18,8 @@ const ProfileScreen = ({ navigation }) => {
       .doc(userId)
       .get();
 
-    setUserName(currentUserData.data().name);
-    setProfileImage(currentUserData.data().imageUrl);
+    setUserName(await currentUserData.data().name);
+    setProfileImage(await currentUserData.data().imageUrl);
   };
 
   const uploadImage = async (file) => {
