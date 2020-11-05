@@ -4,9 +4,12 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   container: {
     alignItems: "center",
-    justifyContent: "center",
     height: 300,
     width: 300,
     borderRadius: 5,
+  },
+  buttonContainer: {
+    width: "100%",
+    alignItems: "flex-end",
   },
 });
