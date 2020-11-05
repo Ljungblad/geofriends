@@ -81,10 +81,8 @@ const FollowingScreen = ({ navigation }) => {
         isOpen={isOpen}
         onClosed={() => {
           setIsOpen(false);
-          if (updated) {
-            setOpenConfirm(true);
-          }
         }}
+        triggerBackdrop={() => setOpenConfirm(true)}
       />
       <BackdropModal
         isOpen={openConfirm}

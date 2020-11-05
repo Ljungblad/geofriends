@@ -7,7 +7,7 @@ import SubmitButton from "../SubmitButton/SubmitButton";
 import CloseButton from "../CloseButton/CloseButton";
 import firebase from "../../../FirebaseConfig";
 
-const AddFriendModal = ({ isOpen, onClosed }) => {
+const AddFriendModal = ({ isOpen, onClosed, triggerBackdrop }) => {
   const [email, setEmail] = useState("");
   const currentUserId = firebase.auth().currentUser.uid;
   const currentUserRef = firebase
@@ -69,6 +69,7 @@ const AddFriendModal = ({ isOpen, onClosed }) => {
             getUserByEmail();
             onClosed();
             setEmail("");
+            triggerBackdrop();
           } else {
             Alert.alert("Field empty", "Please enter a valid email address.");
           }
