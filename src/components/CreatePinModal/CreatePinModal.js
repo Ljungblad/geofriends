@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button, Alert } from "react-native";
+import { View, Text, TextInput, Alert } from "react-native";
 import styles from "./styles";
 import Modal from "react-native-modalbox";
 import SubmitButton from "../SubmitButton/SubmitButton";
@@ -28,13 +28,16 @@ const CreatePinModal = ({ isOpen, onClosed }) => {
       onClosed={onClosed}
       coverScreen={true}
     >
-      <CloseButton
-        size={30}
-        onPress={() => {
-          console.log("close");
-          onClosed();
-        }}
-      />
+      <View style={styles.buttonContainer}>
+        <CloseButton
+          size={30}
+          onPress={() => {
+            console.log("close");
+            onClosed();
+          }}
+        />
+      </View>
+
       <View style={styles.inputWrapepr}>
         <Text style={styles.label}>Description</Text>
         <TextInput
@@ -50,6 +53,7 @@ const CreatePinModal = ({ isOpen, onClosed }) => {
             if (description !== "") {
               updatePin();
               onClosed();
+              setDescription("");
             } else {
               Alert.alert("Description is empty", "Please enter a description");
             }

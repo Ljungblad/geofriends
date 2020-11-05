@@ -23,10 +23,15 @@ const FriendsListItem = ({ name, userId, imageUrl }) => {
       {imageUrl !== "" ? (
         <Image source={{ uri: imageUrl }} style={styles.image} />
       ) : (
-        <Image source={require("../../../assets/images/default.jpg")} style={styles.image} />
+        <Image
+          source={require("../../../assets/images/default.jpg")}
+          style={styles.image}
+        />
       )}
       <Text style={styles.text}>{name}</Text>
-      <CloseButton size={25} onPress={removeFromFollowingList} />
+      <View style={styles.buttonContainer}>
+        <CloseButton size={25} onPress={removeFromFollowingList} />
+      </View>
     </View>
   );
 };
