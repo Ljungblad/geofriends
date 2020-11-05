@@ -19,7 +19,6 @@ const AddFriendModal = ({ isOpen, onClosed }) => {
     await currentUserRef.update({
       following: firebase.firestore.FieldValue.arrayUnion(userId),
     });
-    Alert.alert("Success!", "Friend was added!");
   };
 
   const getUserByEmail = async () => {
@@ -35,7 +34,10 @@ const AddFriendModal = ({ isOpen, onClosed }) => {
         });
       })
       .catch((err) => {
-        console.log("Error getting documents", err);
+        Alert.alert(
+          "Invalid email!",
+          "We could not find the user you were looking for."
+        );
       });
   };
 
@@ -66,6 +68,7 @@ const AddFriendModal = ({ isOpen, onClosed }) => {
           if (email !== "") {
             getUserByEmail();
             onClosed();
+            setEmail("");
           } else {
             Alert.alert("Field empty", "Please enter a valid email address.");
           }
