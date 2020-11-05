@@ -4,9 +4,9 @@ import styles from "./styles";
 
 const SubmitButton = ({ label, onPress }) => {
   return (
-    <TouchableOpacity style={styles.wrapper} onPress={onPress}>
-      <Text style={styles.label}>{label}</Text>
-    </TouchableOpacity>
+      <TouchableOpacity style={styles.wrapper} onPress={onPress}>
+        <Text style={styles.label}>{label}</Text>
+      </TouchableOpacity>
   );
 };
 

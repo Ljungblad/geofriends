@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import InputField from "../../components/InputField/InputField";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
+import KeyboardScroll from "../../components/KeyboardScroll/KeyboardScroll";
 import globalStyles from "../../styles/globalStyles";
 import firebase from "../../../FirebaseConfig";
 
@@ -22,20 +23,22 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={globalStyles.container}>
-      <InputField
-        label="Email"
-        placeholder="Email"
-        onChangeText={(email) => setEmail(email)}
-      />
-      <InputField
-        label="Password"
-        placeholder="Password"
-        onChangeText={(password) => setPassword(password)}
-        secureTextEntry={true}
-      />
-      <SubmitButton label="Login" onPress={handleLogin} />
-    </View>
+    <KeyboardScroll>
+      <View style={globalStyles.container}>
+        <InputField
+          label="Email"
+          placeholder="Email"
+          onChangeText={(email) => setEmail(email)}
+        />
+        <InputField
+          label="Password"
+          placeholder="Password"
+          onChangeText={(password) => setPassword(password)}
+          secureTextEntry={true}
+        />
+        <SubmitButton label="Login" onPress={handleLogin} />
+      </View>
+    </KeyboardScroll>
   );
 };
 
