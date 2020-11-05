@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { Text, View, TextInput, Button } from "react-native";
+import React, { useState } from "react";
+import { Text, View } from "react-native";
 import InputField from "../../components/InputField/InputField";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
+import SecondaryButton from "../../components/SecondaryButton/SecondayButton";
+import KeyboardScroll from "../../components/KeyboardScroll/KeyboardScroll";
 import globalStyles from "../../styles/globalStyles";
 import firebase from "../../../FirebaseConfig";
 
@@ -42,29 +44,29 @@ const SignUpScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={globalStyles.container}>
-      <Text>Sign up</Text>
-      <InputField
-        label="Name"
-        placeholder="Your name"
-        onChangeText={(name) => setName(name)}
-        autoCapitalize="words"
-      />
-      <InputField
-        label="Email"
-        placeholder="example@mail.com"
-        onChangeText={(email) => setEmail(email)}
-      />
-      <InputField
-        label="Password"
-        placeholder="Password"
-        secureTextEntry={true}
-        onChangeText={(password) => setPassword(password)}
-      />
-      <SubmitButton label="Sign up" onPress={handleSignUp} />
-      <Text>Already have an account?</Text>
-      <Button title="Login" onPress={() => navigation.navigate("Login")} />
-    </View>
+    <KeyboardScroll>
+      <View style={globalStyles.container}>
+        <InputField
+          label="Name"
+          placeholder="Your name"
+          onChangeText={(name) => setName(name)}
+          autoCapitalize="words"
+        />
+        <InputField
+          label="Email"
+          placeholder="example@mail.com"
+          onChangeText={(email) => setEmail(email)}
+        />
+        <InputField
+          label="Password"
+          placeholder="Password"
+          secureTextEntry={true}
+          onChangeText={(password) => setPassword(password)}
+        />
+        <SubmitButton label="Sign up" onPress={handleSignUp} />
+        <SecondaryButton label="Login" onPress={() => navigation.navigate("Login")} />
+      </View>
+    </KeyboardScroll>
   );
 };
 
