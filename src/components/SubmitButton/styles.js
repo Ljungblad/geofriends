@@ -14,7 +14,6 @@ export default StyleSheet.create({
     shadowOffset: { height: 1, width: 1 }, // IOS
     shadowOpacity: 1, // IOS
     shadowRadius: 1, //IOS
-    elevation: 2, // Android
   },
   label: {
     fontSize: 18,

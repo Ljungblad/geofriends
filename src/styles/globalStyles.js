@@ -9,6 +9,14 @@ export default StyleSheet.create({
   },
   title: {
     fontFamily: "nunitoSans-bold",
-    fontSize: 20, 
-  }
+    fontSize: 26,
+  },
+  regularFont: {
+    fontFamily: "nunitoSans-regular",
+    fontSize: 16,
+  },
+  smallFont: {
+    fontFamily: "nunitoSans-light",
+    fontSize: 16,
+  },
 });

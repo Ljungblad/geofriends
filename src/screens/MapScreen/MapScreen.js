@@ -20,6 +20,7 @@ import CreatePinModal from "../../components/CreatePinModal/CreatePinModal";
 
 //ICONS
 import { Feather, FontAwesome5, FontAwesome, Entypo } from "@expo/vector-icons";
+// console.disableYellowBox = true;
 
 const MapScreen = () => {
   const [location, setLocation] = useState(null);
@@ -118,7 +119,7 @@ const MapScreen = () => {
 
   // COLLECTS THE USERS DATA AND LOCATION
   const refreshMap = async () => {
-    let location = await Location.getCurrentPositionAsync({});
+    let location = await Location.getLastKnownPositionAsync();
     setLocation(location);
     getUsers();
     updateLocation(location);
