@@ -2,7 +2,7 @@
   "expo": {
     "name": "geofriends",
     "slug": "geofriends",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -19,6 +19,10 @@
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "This app uses location."
       }
+    },
+    "android": {
+      "package": "com.geofriends.geofriends",
+      "versionCode": 1.1
     },
     "web": {
       "favicon": "./assets/favicon.png"

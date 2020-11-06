@@ -5,6 +5,8 @@ import firebase from "../../../FirebaseConfig";
 import globalStyles from "../../styles/globalStyles";
 import styles from "./styles";
 import SecondaryButton from "../../components/SecondaryButton/SecondayButton";
+import UploadPicture from "../../components/UploadPicture/UploadPicture";
+import NavigationButton from "../../components/NavigationButton/NavigationButton";
 
 const ProfileScreen = ({ navigation }) => {
   const [userName, setUserName] = useState(null);
@@ -48,22 +50,29 @@ const ProfileScreen = ({ navigation }) => {
 
   const openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
-
     if (permissionResult.granted === false) {
       alert("Permission to access camera roll is required!");
       return;
     }
-
     const options = { quality: 0.3 };
-
     let pickerResult = await ImagePicker.launchImageLibraryAsync(options);
-
     if (pickerResult.cancelled === true) {
       return;
     }
-
     await uploadImage(pickerResult);
     setProfileImage(pickerResult.uri);
+  };
+
+  const logout = () => {
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        console.log("Logged out");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -72,43 +81,28 @@ const ProfileScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      
-      {profileImage !== "" ? (
-        <Image source={{ uri: profileImage }} style={styles.profileImage} />
-      ) : (
-        <Image
-        source={require("../../../assets/images/default.jpg")}
-        style={styles.profileImage}
+      <View style={styles.topSectionContainer}>
+        <UploadPicture
+          profileImage={profileImage}
+          openImagePickerAsync={openImagePickerAsync}
         />
-      )}
+        {userName && (
+          <Text style={[styles.nameTag, globalStyles.title]}>{userName}</Text>
+        )}
+      </View>
 
-      <SecondaryButton label="Upload profile picture" onPress={openImagePickerAsync} />
-
-      {userName && <Text style={globalStyles.title}>{userName}</Text>}
-
-      <View style={styles.buttonContainer}>
-        <SecondaryButton 
-          label="Change Password" 
-          onPress={() => navigation.navigate("Change Password")} 
+      <View style={styles.topButtonContainer}>
+        <NavigationButton
+          label="Change Password"
+          onPress={() => navigation.navigate("Change Password")}
         />
-        <SecondaryButton 
-          label="Delete Account" 
-          onPress={() => navigation.navigate("Delete Account")} 
+        <NavigationButton
+          label="Delete Account"
+          onPress={() => navigation.navigate("Delete Account")}
         />
-        <SecondaryButton 
-          label="Logout" 
-          onPress={() => {
-            firebase
-              .auth()
-              .signOut()
-              .then(() => {
-                console.log("it worked");
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-          }} 
-        />
+      </View>
+      <View style={styles.bottomButtonContainer}>
+        <SecondaryButton label="Logout" onPress={() => logout()} />
       </View>
     </View>
   );
