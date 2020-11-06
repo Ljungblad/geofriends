@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  Text,
-  View,
-  ActivityIndicator,
-  Image,
-  Animated,
-  Easing,
-} from "react-native";
+import { Text, View, ActivityIndicator, Image } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from "react-native-maps";
 import * as Location from "expo-location";
 import styles from "./styles";
@@ -15,11 +8,11 @@ import firebase from "../../../FirebaseConfig";
 import colors from "../../styles/colors";
 
 // COMPONENTS
-import MapButton from "../../components/MapButton/MapButton";
 import CreatePinModal from "../../components/CreatePinModal/CreatePinModal";
+import MapButtonList from "../../components/MapButtonList/MapButtonList";
 
 //ICONS
-import { Feather, FontAwesome5, FontAwesome, Entypo } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 // console.disableYellowBox = true;
 
 const MapScreen = () => {
@@ -31,26 +24,6 @@ const MapScreen = () => {
   const [isOpen, setIsOpen] = useState(false);
   const userId = firebase.auth().currentUser.uid;
   const currentUserRef = firebase.firestore().collection("users").doc(userId);
-
-  //ROTATES THE REFRESHING ICON
-  let rotateValue = new Animated.Value(0);
-
-  const rotationAnimation = () => {
-    rotateValue.setValue(0);
-    Animated.loop(
-      Animated.timing(rotateValue, {
-        toValue: 1,
-        duration: 1000,
-        easing: Easing.linear,
-        useNativeDriver: false,
-      })
-    ).start();
-  };
-
-  const RotateData = rotateValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: ["0deg", "360deg"],
-  });
 
   // UPDATES THE CURRENT USERS LOCATION TO DATABASE
   const updateLocation = async (location) => {
@@ -106,7 +79,7 @@ const MapScreen = () => {
       if (status !== "granted") {
         alert("Permission to access location was denied");
       }
-      let location = await Location.getCurrentPositionAsync({});
+      let location = await Location.getLastKnownPositionAsync();
       setLocation(location);
       getFollowingList();
       updateLocation(location);
@@ -119,7 +92,7 @@ const MapScreen = () => {
 
   // COLLECTS THE USERS DATA AND LOCATION
   const refreshMap = async () => {
-    let location = await Location.getLastKnownPositionAsync();
+    let location = await Location.getCurrentPositionAsync();
     setLocation(location);
     getUsers();
     updateLocation(location);
@@ -218,33 +191,13 @@ const MapScreen = () => {
             )}
           </MapView>
 
-          {/* MAKE A NEW COMPONENT CALLED MAPBUTTONS */}
+          <MapButtonList
+            refreshMap={refreshMap}
+            removePin={removePin}
+            setIsOpen={() => setIsOpen(true)}
+            currentUser={currentUser}
+          />
 
-          <View style={styles.buttonWrapper}>
-            <MapButton
-              onPress={() => {
-                refreshMap();
-                rotationAnimation();
-              }}
-            >
-              <Animated.View style={{ transform: [{ rotate: RotateData }] }}>
-                <FontAwesome name="refresh" size={24} color={colors.darkGrey} />
-              </Animated.View>
-            </MapButton>
-            {currentUser && currentUser.pin.isActive ? (
-              <MapButton onPress={removePin}>
-                <FontAwesome name="remove" size={24} color={colors.darkGrey} />
-              </MapButton>
-            ) : (
-              <MapButton onPress={() => setIsOpen(true)}>
-                <FontAwesome5
-                  name="map-pin"
-                  size={24}
-                  color={colors.darkGrey}
-                />
-              </MapButton>
-            )}
-          </View>
           <CreatePinModal
             isOpen={isOpen}
             onClosed={() => {
