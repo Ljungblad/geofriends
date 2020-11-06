@@ -6,6 +6,8 @@ import SecondaryButton from "../../components/SecondaryButton/SecondayButton";
 import KeyboardScroll from "../../components/KeyboardScroll/KeyboardScroll";
 import globalStyles from "../../styles/globalStyles";
 import firebase from "../../../FirebaseConfig";
+import styles from "./styles";
+import colors from "../../styles/colors";
 
 const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -61,7 +63,18 @@ const SignUpScreen = ({ navigation }) => {
           onChangeText={(password) => setPassword(password)}
         />
         <SubmitButton label="Sign up" onPress={handleSignUp} />
-        <SecondaryButton label="Login" onPress={() => navigation.navigate("Login")} />
+
+        <View style={styles.loginLink}>
+          <Text style={[styles.loginText, globalStyles.boldFont]}>
+            Already have an account?
+          </Text>
+          <SecondaryButton
+            color={colors.primary}
+            underLine="none"
+            label="Login"
+            onPress={() => navigation.navigate("Login")}
+          />
+        </View>
       </View>
     </KeyboardScroll>
   );

@@ -7,7 +7,7 @@ export default StyleSheet.create({
     marginVertical: 5,
   },
   label: {
-    color: colors.black,
     textDecorationLine: "underline",
+    color: colors.primary,
   },
 });
