@@ -7,4 +7,10 @@ export default StyleSheet.create({
     backgroundColor: colors.white,
     paddingTop: 40,
   },
+  buttonWrapper: {
+    paddingBottom: 40,
+    borderBottomColor: colors.almostWhite,
+    borderBottomWidth: 0.5,
+    marginHorizontal: 20,
+  }
 });
