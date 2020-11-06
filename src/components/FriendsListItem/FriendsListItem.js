@@ -20,14 +20,16 @@ const FriendsListItem = ({ name, userId, imageUrl, deleteButton }) => {
   return (
     <View style={styles.container}>
       <View style={styles.listItem}>
-        {imageUrl !== "" ? (
-          <Image source={{ uri: imageUrl }} style={styles.image} />
-        ) : (
-          <Image
-            source={require("../../../assets/images/default.jpg")}
-            style={styles.image}
-          />
-        )}
+        <View style={styles.imageWrapper}>
+          {imageUrl !== "" ? (
+            <Image source={{ uri: imageUrl }} style={styles.image} />
+          ) : (
+            <Image
+              source={require("../../../assets/images/default.jpg")}
+              style={styles.image}
+            />
+          )}
+        </View>
         <Text style={styles.text}>{name}</Text>
         {deleteButton == true &&
           <View style={styles.buttonContainer}>

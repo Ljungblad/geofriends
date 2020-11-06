@@ -24,11 +24,12 @@ export default StyleSheet.create({
     height: 40,
     borderRadius: 40,
     backgroundColor: colors.grey,
+  },
+  imageWrapper: {
     shadowColor: colors.shadowBlack, // IOS
-    shadowOffset: { height: 3, width: 3 }, // IOS
-    shadowOpacity: 5, // IOS
-    shadowRadius: 5, //IOS
-    elevation: 2,
+    shadowOffset: { height: 1, width: 1 }, // IOS
+    shadowOpacity: 0.3, // IOS
+    shadowRadius: 1, //IOS
   },
   buttonContainer: {
     position: "absolute",
