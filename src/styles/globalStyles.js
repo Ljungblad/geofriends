@@ -11,6 +11,10 @@ export default StyleSheet.create({
     fontFamily: "nunitoSans-bold",
     fontSize: 26,
   },
+  boldFont: {
+    fontFamily: "nunitoSans-bold",
+    fontSize: 16,
+  },
   regularFont: {
     fontFamily: "nunitoSans-regular",
     fontSize: 16,

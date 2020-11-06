@@ -5,6 +5,7 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import KeyboardScroll from "../../components/KeyboardScroll/KeyboardScroll";
 import globalStyles from "../../styles/globalStyles";
 import firebase from "../../../FirebaseConfig";
+import styles from "./styles";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("email");
