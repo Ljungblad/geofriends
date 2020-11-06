@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 
 export default StyleSheet.create({
   container: {
@@ -22,5 +22,22 @@ export default StyleSheet.create({
   smallFont: {
     fontFamily: "nunitoSans-light",
     fontSize: 16,
+  },
+  modalContainer: {
+    alignItems: "center",
+    width: Dimensions.get("window").width - 40,
+    height: "auto",
+    borderRadius: 5,
+    paddingBottom: 40,
+  },
+  inputWrapper: {
+    width: "100%",
+    paddingHorizontal: 30,
+  },
+  closeButtonContainer: {
+    width: "100%",
+    alignItems: "flex-end",
+    paddingRight: 5,
+    paddingTop: 5,
   },
 });

@@ -1,15 +1,16 @@
 import { StyleSheet } from "react-native";
-//import colors from "../../styles/colors";
 
 export default StyleSheet.create({
-  container: {
-    alignItems: "center",
-    height: 300,
-    width: 300,
-    borderRadius: 5,
+  title: {
+    marginBottom: 10,
   },
-  buttonContainer: {
-    width: "100%",
-    alignItems: "flex-end",
+  test: {
+    //height: 20,
+    // backgroundColor: "grey",
+    marginBottom: 20,
   },
+  errorMsg: {
+    color: "red",
+    fontSize: 14,
+  }
 });

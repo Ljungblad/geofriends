@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Alert } from "react-native";
 import styles from "./styles";
+import globalStyles from "../../styles/globalStyles";
 import Modal from "react-native-modalbox";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import CloseButton from "../CloseButton/CloseButton";
@@ -23,12 +24,12 @@ const CreatePinModal = ({ isOpen, onClosed }) => {
 
   return (
     <Modal
-      style={styles.container}
+      style={globalStyles.modalContainer}
       isOpen={isOpen}
       onClosed={onClosed}
       coverScreen={true}
     >
-      <View style={styles.buttonContainer}>
+      <View style={globalStyles.closeButtonContainer}>
         <CloseButton
           size={30}
           onPress={() => {
@@ -38,11 +39,11 @@ const CreatePinModal = ({ isOpen, onClosed }) => {
         />
       </View>
 
-      <View style={styles.inputWrapepr}>
-        <Text style={styles.label}>Description</Text>
+      <View style={globalStyles.inputWrapper}>
+        <Text style={globalStyles.title}>Place a pin on the map!</Text>
         <TextInput
           style={styles.input}
-          placeholder="What do you wanna share?"
+          placeholder="What are you up to? Write a description."
           onChangeText={(description) => setDescription(description)}
           numberOfLines={10}
           multiline={true}
