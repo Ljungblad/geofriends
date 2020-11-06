@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View } from "react-native";
 import InputField from "../../components/InputField/InputField";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
+import KeyboardScroll from "../../components/KeyboardScroll/KeyboardScroll";
 import globalStyles from "../../styles/globalStyles";
 import firebase from "../../../FirebaseConfig";
 
@@ -38,21 +39,23 @@ const ChangePasswordScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={globalStyles.container}>
-      <InputField
-        label="Current password"
-        placeholder="Enter your current password"
-        secureTextEntry={true}
-        onChangeText={(currentPassword) => setCurrentPassword(currentPassword)}
-      />
-      <InputField
-        label="New password"
-        placeholder="Enter your new password"
-        secureTextEntry={true}
-        onChangeText={(newPassword) => setNewPassword(newPassword)}
-      />
-      <SubmitButton label="Change password" onPress={handleChangePassword} />
-    </View>
+    <KeyboardScroll>
+      <View style={globalStyles.container}>
+        <InputField
+          //label="Current password"
+          placeholder="Enter your current password"
+          secureTextEntry={true}
+          onChangeText={(currentPassword) => setCurrentPassword(currentPassword)}
+        />
+        <InputField
+          //label="New password"
+          placeholder="Enter your new password"
+          secureTextEntry={true}
+          onChangeText={(newPassword) => setNewPassword(newPassword)}
+        />
+        <SubmitButton label="Change password" onPress={handleChangePassword} />
+      </View>
+    </KeyboardScroll>
   );
 };
 

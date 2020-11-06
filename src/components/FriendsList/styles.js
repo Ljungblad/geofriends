@@ -4,7 +4,4 @@ export default StyleSheet.create({
   container: {
     flex: 1,
   },
-  list: {
-    marginTop: 40,
-  },
 });

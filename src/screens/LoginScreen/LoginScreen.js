@@ -26,12 +26,10 @@ const LoginScreen = ({ navigation }) => {
     <KeyboardScroll>
       <View style={globalStyles.container}>
         <InputField
-          label="Email"
           placeholder="Email"
           onChangeText={(email) => setEmail(email)}
         />
         <InputField
-          label="Password"
           placeholder="Password"
           onChangeText={(password) => setPassword(password)}
           secureTextEntry={true}

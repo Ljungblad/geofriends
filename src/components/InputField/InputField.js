@@ -1,14 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Text, View, TextInput } from "react-native";
 import styles from "./styles";
+import colors from "../../styles/colors";
 
-const InputField = ({ label, onChangeText, placeholder, secureTextEntry, autoCapitalize }) => {
+const InputField = ({ onChangeText, placeholder, secureTextEntry, autoCapitalize }) => {
+  const [isFocused, setIsFocused] = useState(false);
+  
   return (
     <View style={styles.wrapper}>
-      <Text style={styles.label}>{label}</Text>
       <TextInput
-        style={styles.input}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        style={isFocused ? styles.inputFocused : styles.input}
         placeholder={placeholder}
+        placeholderTextColor={colors.grey}
         autoCapitalize={autoCapitalize || "none"}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry || false}

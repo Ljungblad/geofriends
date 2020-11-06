@@ -47,18 +47,15 @@ const SignUpScreen = ({ navigation }) => {
     <KeyboardScroll>
       <View style={globalStyles.container}>
         <InputField
-          label="Name"
-          placeholder="Your name"
+          placeholder="Name"
           onChangeText={(name) => setName(name)}
           autoCapitalize="words"
         />
         <InputField
-          label="Email"
-          placeholder="example@mail.com"
+          placeholder="Email"
           onChangeText={(email) => setEmail(email)}
         />
         <InputField
-          label="Password"
           placeholder="Password"
           secureTextEntry={true}
           onChangeText={(password) => setPassword(password)}

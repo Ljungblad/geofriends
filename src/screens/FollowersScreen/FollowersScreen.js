@@ -34,7 +34,7 @@ const FollowersScreen = () => {
 
   return (
     <View style={styles.container}>
-      {followersList && <FriendsList data={followersList} />}
+      {followersList && <FriendsList data={followersList} deleteButton={false} />}
     </View>
   );
 };

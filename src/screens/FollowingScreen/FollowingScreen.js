@@ -6,9 +6,8 @@ import styles from "./styles";
 import firebase from "../../../FirebaseConfig";
 import AddFriendModal from "../../components/AddFriendModal/AddFriendModal";
 import BackdropModal from "../../components/BackdropModal/BackdropModal";
-import { set } from "react-native-reanimated";
 
-const FollowingScreen = ({ navigation }) => {
+const FollowingScreen = () => {
   const [users, setUsers] = useState(null);
   const [followingList, setFollowingList] = useState([]);
   const [updated, setUpdated] = useState(false);
@@ -70,13 +69,15 @@ const FollowingScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <SubmitButton
-        label="Add Friend"
-        onPress={() => {
-          setIsOpen(true);
-        }}
-      />
-      {users && <FriendsList data={users} />}
+      <View style={styles.buttonWrapper}>
+        <SubmitButton
+          label="Add Friend"
+          onPress={() => {
+            setIsOpen(true);
+          }}
+        />
+      </View>
+      {users && <FriendsList data={users} deleteButton={true} />}
       <AddFriendModal
         isOpen={isOpen}
         onClosed={() => {
