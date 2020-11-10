@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Alert } from "react-native";
 import InputField from "../../components/InputField/InputField";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
+import KeyboardScroll from "../../components/KeyboardScroll/KeyboardScroll";
 import globalStyles from "../../styles/globalStyles";
 import firebase from "../../../FirebaseConfig";
 
@@ -33,28 +34,27 @@ const DeleteAccountScreen = () => {
                 Alert.alert("Success", "Account was deleted");
               })
               .catch((error) => {
-                console.log(error);
+                Alert.alert("Error!", `${error}`);
               });
           })
-          .catch((error) => {
-            console.log(error);
-          });
       })
       .catch((error) => {
-        console.log(error);
+        Alert.alert("Error!", `${error}`);
       });
   };
 
   return (
-    <View style={globalStyles.container}>
-      <InputField
-        label="Password"
-        placeholder="Enter your password"
-        secureTextEntry={true}
-        onChangeText={(password) => setPassword(password)}
-      />
-      <SubmitButton label="Delete account" onPress={handleDeleteAccount} />
-    </View>
+    <KeyboardScroll>
+      <View style={globalStyles.container}>
+        <InputField
+          label="Password"
+          placeholder="Enter your password"
+          secureTextEntry={true}
+          onChangeText={(password) => setPassword(password)}
+        />
+        <SubmitButton label="Delete account" onPress={handleDeleteAccount} />
+      </View>
+    </KeyboardScroll>
   );
 };
 
