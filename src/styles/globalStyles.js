@@ -9,7 +9,7 @@ export default StyleSheet.create({
   },
   title: {
     fontFamily: "nunitoSans-bold",
-    fontSize: 26,
+    fontSize: 20,
   },
   boldFont: {
     fontFamily: "nunitoSans-bold",

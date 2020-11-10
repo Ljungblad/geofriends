@@ -1,5 +1,4 @@
 import { StyleSheet } from "react-native";
-import { color } from "react-native-reanimated";
 import colors from "../../styles/colors";
 
 export default StyleSheet.create({
@@ -16,7 +15,6 @@ export default StyleSheet.create({
     paddingVertical: 18,
   },
   text: {
-    fontSize: 16,
     marginLeft: 18,
   },
   image: {

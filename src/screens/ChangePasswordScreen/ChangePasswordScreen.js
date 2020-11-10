@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { View, Alert } from "react-native";
 import InputField from "../../components/InputField/InputField";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import KeyboardScroll from "../../components/KeyboardScroll/KeyboardScroll";
@@ -26,7 +26,7 @@ const ChangePasswordScreen = ({ navigation }) => {
         user
           .updatePassword(newPassword)
           .then(() => {
-            alert("Password was updated!");
+            Alert.alert("Success", "Your password was updated!");
             navigation.navigate("Profile");
           })
           .catch((error) => {
@@ -45,7 +45,9 @@ const ChangePasswordScreen = ({ navigation }) => {
           //label="Current password"
           placeholder="Enter your current password"
           secureTextEntry={true}
-          onChangeText={(currentPassword) => setCurrentPassword(currentPassword)}
+          onChangeText={(currentPassword) =>
+            setCurrentPassword(currentPassword)
+          }
         />
         <InputField
           //label="New password"

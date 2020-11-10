@@ -12,5 +12,7 @@ export default StyleSheet.create({
     paddingLeft: 8,
     paddingTop: 8,
     marginVertical: 20,
+    fontFamily: "nunitoSans-regular",
+    fontSize: 16,
   },
 });

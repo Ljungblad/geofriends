@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, ActivityIndicator, Image } from "react-native";
+import { Text, View, ActivityIndicator, Image, Alert } from "react-native";
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from "react-native-maps";
 import * as Location from "expo-location";
 import styles from "./styles";
@@ -77,7 +77,10 @@ const MapScreen = () => {
     (async () => {
       let { status } = await Location.requestPermissionsAsync();
       if (status !== "granted") {
-        alert("Permission to access location was denied");
+        Alert.alert(
+          "Permission to access location was denied",
+          "Please accept permission to use the app as intended"
+        );
       }
       let location = await Location.getLastKnownPositionAsync();
       setLocation(location);
@@ -134,7 +137,6 @@ const MapScreen = () => {
                   key={i}
                 >
                   {user.pin.isActive && (
-                    // <Feather name="map-pin" size={50} color={colors.black} />
                     <Entypo name="location-pin" size={50} color="red" />
                   )}
                   {user.imageUrl !== "" ? (

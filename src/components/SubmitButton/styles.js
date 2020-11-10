@@ -3,7 +3,7 @@ import colors from "../../styles/colors";
 
 export default StyleSheet.create({
   wrapper: {
-    paddingHorizontal: 35,
+    width: 288,
     height: 45,
     backgroundColor: colors.secondary,
     alignSelf: "center",

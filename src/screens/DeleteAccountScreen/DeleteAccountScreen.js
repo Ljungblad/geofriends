@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { View, Alert } from "react-native";
 import InputField from "../../components/InputField/InputField";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import globalStyles from "../../styles/globalStyles";
@@ -26,12 +26,11 @@ const DeleteAccountScreen = () => {
           .doc(user.uid)
           .delete()
           .then(() => {
-            alert("account deleted");
             firebase
               .auth()
               .currentUser.delete()
               .then(() => {
-                alert("Account was deleted!");
+                Alert.alert("Success", "Account was deleted");
               })
               .catch((error) => {
                 console.log(error);

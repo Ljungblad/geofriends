@@ -41,7 +41,7 @@ const SignUpScreen = ({ navigation }) => {
         console.log(res);
       })
       .catch((error) => {
-        console.error(error);
+        Alert.alert("Error!", `${error}`);
       });
   };
 

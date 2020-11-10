@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Text, View, Button, Image } from "react-native";
+import { Text, View, Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import firebase from "../../../FirebaseConfig";
 import globalStyles from "../../styles/globalStyles";
@@ -51,7 +51,10 @@ const ProfileScreen = ({ navigation }) => {
   const openImagePickerAsync = async () => {
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
     if (permissionResult.granted === false) {
-      alert("Permission to access camera roll is required!");
+      Alert.alert(
+        "Permission to access camera roll was denied",
+        "Please accept permission to to upload a picture"
+      );
       return;
     }
     const options = { quality: 0.3 };
@@ -87,7 +90,7 @@ const ProfileScreen = ({ navigation }) => {
           openImagePickerAsync={openImagePickerAsync}
         />
         {userName && (
-          <Text style={[styles.nameTag, globalStyles.title]}>{userName}</Text>
+          <Text style={[globalStyles.title, styles.nameTag]}>{userName}</Text>
         )}
       </View>
 

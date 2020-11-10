@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View } from "react-native";
+import { View, Alert } from "react-native";
 import InputField from "../../components/InputField/InputField";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import KeyboardScroll from "../../components/KeyboardScroll/KeyboardScroll";
@@ -19,7 +19,7 @@ const LoginScreen = ({ navigation }) => {
         console.log("Logged in");
       })
       .catch((error) => {
-        console.error(error);
+        Alert.alert("Error!", `${error}`);
       });
   };
 
