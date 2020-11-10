@@ -31,10 +31,12 @@ const ChangePasswordScreen = ({ navigation }) => {
           })
           .catch((error) => {
             console.log(error);
+            Alert.alert("Error!", `${error}`);
           });
       })
       .catch((error) => {
         console.log(error);
+        Alert.alert("Error!", `${error}`);
       });
   };
 
@@ -42,15 +44,13 @@ const ChangePasswordScreen = ({ navigation }) => {
     <KeyboardScroll>
       <View style={globalStyles.container}>
         <InputField
-          //label="Current password"
           placeholder="Enter your current password"
           secureTextEntry={true}
           onChangeText={(currentPassword) =>
-            setCurrentPassword(currentPassword)
+          setCurrentPassword(currentPassword)
           }
         />
         <InputField
-          //label="New password"
           placeholder="Enter your new password"
           secureTextEntry={true}
           onChangeText={(newPassword) => setNewPassword(newPassword)}

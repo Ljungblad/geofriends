@@ -34,15 +34,12 @@ const DeleteAccountScreen = () => {
                 Alert.alert("Success", "Account was deleted");
               })
               .catch((error) => {
-                console.log(error);
+                Alert.alert("Error!", `${error}`);
               });
           })
-          .catch((error) => {
-            console.log(error);
-          });
       })
       .catch((error) => {
-        console.log(error);
+        Alert.alert("Error!", `${error}`);
       });
   };
 
