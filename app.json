@@ -4,9 +4,9 @@
     "slug": "geofriends",
     "version": "1.1.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/geoFriends_icon.png",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/pin_icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#3fa182"
     },
