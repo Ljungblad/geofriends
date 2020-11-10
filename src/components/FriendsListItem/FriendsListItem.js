@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View, Image } from "react-native";
 import CloseButton from "../CloseButton/CloseButton";
 import styles from "./styles";
+import globalStyles from "../../styles/globalStyles";
 import firebase from "../../../FirebaseConfig";
 
 const FriendsListItem = ({ name, userId, imageUrl, deleteButton }) => {
@@ -30,12 +31,12 @@ const FriendsListItem = ({ name, userId, imageUrl, deleteButton }) => {
             />
           )}
         </View>
-        <Text style={styles.text}>{name}</Text>
-        {deleteButton == true &&
+        <Text style={[styles.text, globalStyles.regularFont]}>{name}</Text>
+        {deleteButton == true && (
           <View style={styles.buttonContainer}>
             <CloseButton size={25} onPress={removeFromFollowingList} />
           </View>
-        }
+        )}
       </View>
     </View>
   );

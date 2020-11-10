@@ -15,6 +15,7 @@ export default StyleSheet.create({
     borderBottomColor: colors.lightGrey,
   },
   nameTag: {
+    fontSize: 26,
     marginBottom: 20,
   },
   topButtonContainer: {
