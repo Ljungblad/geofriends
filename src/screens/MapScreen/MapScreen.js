@@ -23,6 +23,9 @@ const MapScreen = () => {
   const [updated, setUpdated] = useState(false);
   const [followingList, setFollowingList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [openCallout, setOpenCallout] = useState(false);
+  const [currentUserCallout, setCurrentUserCallout] = useState(false);
+  const [focusedUser, setFocusedUser] = useState(null);
   const userId = firebase.auth().currentUser.uid;
   const currentUserRef = firebase.firestore().collection("users").doc(userId);
 
@@ -118,7 +121,6 @@ const MapScreen = () => {
           <MapView
             provider={PROVIDER_GOOGLE}
             style={styles.mapStyle}
-            // showsUserLocation={true}
             initialRegion={{
               latitude: location.coords.latitude,
               longitude: location.coords.longitude,
@@ -134,6 +136,14 @@ const MapScreen = () => {
                   coordinate={{
                     latitude: user.location.latitude,
                     longitude: user.location.longitude,
+                  }}
+                  onPress={() => {
+                    if (user.pin.isActive) {
+                      setFocusedUser(user);
+                      setOpenCallout(true);
+                    } else {
+                      return;
+                    }
                   }}
                   key={i}
                 >
@@ -152,11 +162,7 @@ const MapScreen = () => {
                     />
                   )}
                   <Callout style={styles.callout}>
-                    <CustomCallout 
-                      name={user.name} 
-                      description={user.pin.description} 
-                      isActive={user.pin.isActive} 
-                    />
+                    <Text>{user.name}</Text>
                   </Callout>
                 </Marker>
               ))}
@@ -165,6 +171,13 @@ const MapScreen = () => {
                 coordinate={{
                   latitude: location.coords.latitude,
                   longitude: location.coords.longitude,
+                }}
+                onPress={() => {
+                  if (currentUser.pin.isActive) {
+                    setCurrentUserCallout(true);
+                  } else {
+                    return;
+                  }
                 }}
               >
                 {currentUser.pin.isActive && (
@@ -183,11 +196,7 @@ const MapScreen = () => {
                 )}
                 {
                   <Callout style={styles.callout}>
-                    <CustomCallout 
-                      name={currentUser.name} 
-                      description={currentUser.pin.description} 
-                      isActive={currentUser.pin.isActive}
-                    />
+                    <Text>{currentUser.name}</Text>
                   </Callout>
                 }
               </Marker>
@@ -208,9 +217,30 @@ const MapScreen = () => {
               console.log("closed");
             }}
           />
+
+          {currentUser && (
+            <CustomCallout
+              name={currentUser.name}
+              description={currentUser.pin.description}
+              isOpen={currentUserCallout}
+              onClosed={() => {
+                setCurrentUserCallout(false);
+              }}
+            />
+          )}
+
+          {focusedUser && (
+            <CustomCallout
+              name={focusedUser.name}
+              description={focusedUser.pin.description}
+              isOpen={openCallout}
+              onClosed={() => {
+                setOpenCallout(false);
+              }}
+            />
+          )}
         </View>
       ) : (
-        // MAKE A NEW COMPONENT CALLED LOADER
         <View style={[globalStyles.container, styles.horizontal]}>
           <ActivityIndicator size="large" color={colors.black} />
         </View>
