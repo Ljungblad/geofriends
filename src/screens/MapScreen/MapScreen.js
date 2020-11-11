@@ -10,6 +10,7 @@ import colors from "../../styles/colors";
 // COMPONENTS
 import CreatePinModal from "../../components/CreatePinModal/CreatePinModal";
 import MapButtonList from "../../components/MapButtonList/MapButtonList";
+import CustomCallout from "../../components/CustomCallout/CustomCallout";
 
 //ICONS
 import { Entypo } from "@expo/vector-icons";
@@ -150,14 +151,12 @@ const MapScreen = () => {
                       style={styles.image}
                     />
                   )}
-
                   <Callout style={styles.callout}>
-                    <Text>{user.name}</Text>
-                    {user.pin.isActive && (
-                      <Text style={{ color: colors.black }}>
-                        {user.pin.description}
-                      </Text>
-                    )}
+                    <CustomCallout 
+                      name={user.name} 
+                      description={user.pin.description} 
+                      isActive={user.pin.isActive} 
+                    />
                   </Callout>
                 </Marker>
               ))}
@@ -169,7 +168,6 @@ const MapScreen = () => {
                 }}
               >
                 {currentUser.pin.isActive && (
-                  // <Feather name="map-pin" size={50} color={colors.black} />
                   <Entypo name="location-pin" size={50} color="red" />
                 )}
                 {currentUser.imageUrl !== "" ? (
@@ -185,8 +183,11 @@ const MapScreen = () => {
                 )}
                 {
                   <Callout style={styles.callout}>
-                    <Text>{currentUser.name}</Text>
-                    <Text>{currentUser.pin.description}</Text>
+                    <CustomCallout 
+                      name={currentUser.name} 
+                      description={currentUser.pin.description} 
+                      isActive={currentUser.pin.isActive}
+                    />
                   </Callout>
                 }
               </Marker>
