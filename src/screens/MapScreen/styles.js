@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native";
+import colors from "../../styles/colors";
 
 export default StyleSheet.create({
   mapContainer: {
@@ -22,16 +23,15 @@ export default StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 50,
-    backgroundColor: "#aaa",
-    borderColor: "#FFF",
+    backgroundColor: colors.grey,
+    borderColor: colors.white,
     borderWidth: 2,
   },
   callout: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    position: "absolute",
-    padding: 5,
+    padding: 2,
     width: 100,
   },
 });
