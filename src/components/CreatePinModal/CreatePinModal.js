@@ -47,6 +47,7 @@ const CreatePinModal = ({ isOpen, onClosed }) => {
           onChangeText={(description) => setDescription(description)}
           numberOfLines={10}
           multiline={true}
+          maxLength={144}
         />
         <SubmitButton
           label="Add pin"

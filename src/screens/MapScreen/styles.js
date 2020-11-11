@@ -31,7 +31,6 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    padding: 2,
     width: 100,
   },
 });
