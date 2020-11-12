@@ -8,7 +8,7 @@ export default StyleSheet.create({
     height: 60,
     width: 300,
     borderRadius: 5,
-    backgroundColor: colors.black,
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
   },
   text: {
     color: colors.white,
