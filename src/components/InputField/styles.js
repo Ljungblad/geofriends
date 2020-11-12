@@ -6,7 +6,7 @@ export default StyleSheet.create({
     marginBottom: 20,
   },
   input: {
-    width: 288,
+    width: "100%",
     height: 40,
     paddingLeft: 5,
     borderBottomColor: colors.lightGrey,
@@ -15,7 +15,7 @@ export default StyleSheet.create({
     fontSize: 16,
   },
   inputFocused: {
-    width: 288,
+    width: "100%",
     height: 40,
     paddingLeft: 5,
     borderBottomColor: colors.darkGrey,

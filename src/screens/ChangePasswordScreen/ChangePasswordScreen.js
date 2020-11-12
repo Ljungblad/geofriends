@@ -43,19 +43,24 @@ const ChangePasswordScreen = ({ navigation }) => {
   return (
     <KeyboardScroll>
       <View style={globalStyles.container}>
-        <InputField
-          placeholder="Enter your current password"
-          secureTextEntry={true}
-          onChangeText={(currentPassword) =>
-          setCurrentPassword(currentPassword)
-          }
-        />
-        <InputField
-          placeholder="Enter your new password"
-          secureTextEntry={true}
-          onChangeText={(newPassword) => setNewPassword(newPassword)}
-        />
-        <SubmitButton label="Change password" onPress={handleChangePassword} />
+        <View style={globalStyles.inputWrapper}>
+          <InputField
+            placeholder="Enter your current password"
+            secureTextEntry={true}
+            onChangeText={(currentPassword) =>
+              setCurrentPassword(currentPassword)
+            }
+          />
+          <InputField
+            placeholder="Enter your new password"
+            secureTextEntry={true}
+            onChangeText={(newPassword) => setNewPassword(newPassword)}
+          />
+          <SubmitButton
+            label="Change password"
+            onPress={handleChangePassword}
+          />
+        </View>
       </View>
     </KeyboardScroll>
   );
