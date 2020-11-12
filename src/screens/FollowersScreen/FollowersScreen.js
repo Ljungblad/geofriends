@@ -7,7 +7,6 @@ import firebase from "../../../FirebaseConfig";
 
 const FollowersScreen = () => {
   const [followersList, setFollowersList] = useState([]);
-  //const [updated, setUpdated] = useState(false);
 
   const getFollowersList = async () => {
     let userList = [];
@@ -28,8 +27,6 @@ const FollowersScreen = () => {
 
   useEffect(() => {
     getFollowersList();
-    
-    console.log(followersList);
   }, []);
 
   return (

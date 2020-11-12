@@ -35,7 +35,6 @@ const MapScreen = () => {
       "location.latitude": location.coords.latitude,
       "location.longitude": location.coords.longitude,
     });
-    console.log("update location");
   };
 
   // COLLECTS THE CURRENT USERS FOLLOWING LIST AND USER DATA
@@ -103,7 +102,6 @@ const MapScreen = () => {
     setLocation(location);
     getUsers();
     updateLocation(location);
-    console.log("refreshed");
   };
 
   // REMOVES THE PIN FROM THE CURRENT USERS DATABASE
@@ -194,11 +192,9 @@ const MapScreen = () => {
                     style={styles.image}
                   />
                 )}
-                {
-                  <Callout style={styles.callout}>
-                    <Text>{currentUser.name}</Text>
-                  </Callout>
-                }
+                <Callout style={styles.callout}>
+                  <Text>{currentUser.name}</Text>
+                </Callout>
               </Marker>
             )}
           </MapView>
@@ -214,7 +210,6 @@ const MapScreen = () => {
             isOpen={isOpen}
             onClosed={() => {
               setIsOpen(false);
-              console.log("closed");
             }}
           />
 

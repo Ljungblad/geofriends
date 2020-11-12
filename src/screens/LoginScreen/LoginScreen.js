@@ -5,9 +5,8 @@ import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import KeyboardScroll from "../../components/KeyboardScroll/KeyboardScroll";
 import globalStyles from "../../styles/globalStyles";
 import firebase from "../../../FirebaseConfig";
-import styles from "./styles";
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = () => {
   const [email, setEmail] = useState("email");
   const [password, setPassword] = useState("password");
 
@@ -15,9 +14,6 @@ const LoginScreen = ({ navigation }) => {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log("Logged in");
-      })
       .catch((error) => {
         Alert.alert("Error!", `${error}`);
       });

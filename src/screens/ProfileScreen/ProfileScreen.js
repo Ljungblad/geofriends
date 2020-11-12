@@ -43,9 +43,6 @@ const ProfileScreen = ({ navigation }) => {
       .update({
         imageUrl: fileUrl,
       })
-      .then(() => {
-        console.log("Updated image to database");
-      });
   };
 
   const openImagePickerAsync = async () => {
@@ -70,12 +67,6 @@ const ProfileScreen = ({ navigation }) => {
     firebase
       .auth()
       .signOut()
-      .then(() => {
-        console.log("Logged out");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
 
   useEffect(() => {
