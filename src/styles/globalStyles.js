@@ -31,8 +31,7 @@ export default StyleSheet.create({
     paddingBottom: 40,
   },
   inputWrapper: {
-    width: "100%",
-    paddingHorizontal: 30,
+    width: "80%",
   },
   closeButtonContainer: {
     width: "100%",

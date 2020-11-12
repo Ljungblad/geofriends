@@ -36,7 +36,7 @@ const DeleteAccountScreen = () => {
               .catch((error) => {
                 Alert.alert("Error!", `${error}`);
               });
-          })
+          });
       })
       .catch((error) => {
         Alert.alert("Error!", `${error}`);
@@ -46,13 +46,15 @@ const DeleteAccountScreen = () => {
   return (
     <KeyboardScroll>
       <View style={globalStyles.container}>
-        <InputField
-          label="Password"
-          placeholder="Enter your password"
-          secureTextEntry={true}
-          onChangeText={(password) => setPassword(password)}
-        />
-        <SubmitButton label="Delete account" onPress={handleDeleteAccount} />
+        <View style={globalStyles.inputWrapper}>
+          <InputField
+            label="Password"
+            placeholder="Enter your password"
+            secureTextEntry={true}
+            onChangeText={(password) => setPassword(password)}
+          />
+          <SubmitButton label="Delete account" onPress={handleDeleteAccount} />
+        </View>
       </View>
     </KeyboardScroll>
   );

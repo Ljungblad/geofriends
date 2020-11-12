@@ -62,15 +62,14 @@ const AddFriendModal = ({ isOpen, onClosed, triggerBackdrop }) => {
         />
       </View>
       <View style={globalStyles.inputWrapper}>
-        <Text style={[globalStyles.title, styles.title]}>Follow a friend by adding their email.</Text>
+        <Text style={[globalStyles.title, styles.title]}>
+          Follow a friend by adding their email.
+        </Text>
         <InputField
           label="Email"
           placeholder="example@mail.com"
           onChangeText={(email) => setEmail(email)}
         />
-        <View style={styles.test}>
-          {error && (<Text style={styles.errorMsg}>{errorMsg}</Text>)}
-        </View>
         <SubmitButton
           label="Add Friend"
           onPress={() => {

@@ -26,16 +26,18 @@ const LoginScreen = ({ navigation }) => {
   return (
     <KeyboardScroll>
       <View style={globalStyles.container}>
-        <InputField
-          placeholder="Email"
-          onChangeText={(email) => setEmail(email)}
-        />
-        <InputField
-          placeholder="Password"
-          onChangeText={(password) => setPassword(password)}
-          secureTextEntry={true}
-        />
-        <SubmitButton label="Login" onPress={handleLogin} />
+        <View style={globalStyles.inputWrapper}>
+          <InputField
+            placeholder="Email"
+            onChangeText={(email) => setEmail(email)}
+          />
+          <InputField
+            placeholder="Password"
+            onChangeText={(password) => setPassword(password)}
+            secureTextEntry={true}
+          />
+          <SubmitButton label="Login" onPress={handleLogin} />
+        </View>
       </View>
     </KeyboardScroll>
   );
