@@ -42,7 +42,7 @@ const CreatePinModal = ({ isOpen, onClosed }) => {
       </View>
 
       <View style={globalStyles.inputWrapper}>
-        <Text style={globalStyles.title}>Place a pin on the map!</Text>
+        <Text style={globalStyles.title}>Place a pin on the map</Text>
         <TextInput
           style={styles.input}
           placeholder="What are you up to? Write a description."
