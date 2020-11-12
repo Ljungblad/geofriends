@@ -7,6 +7,10 @@ export default StyleSheet.create({
     width: 300,
     borderRadius: 5,
   },
+  wrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
   contentContainer: {
     paddingHorizontal: 20,
     marginBottom: 20,
@@ -24,4 +28,8 @@ export default StyleSheet.create({
   descriptionText: {
     color: colors.white,
   },
+  timeStamp: {
+    fontSize: 11,
+    marginLeft: 6,
+  }
 });

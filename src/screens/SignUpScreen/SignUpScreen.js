@@ -36,6 +36,7 @@ const SignUpScreen = ({ navigation }) => {
             pin: {
               isActive: false,
               description: "",
+              createdAt: null,
             },
           });
       })
