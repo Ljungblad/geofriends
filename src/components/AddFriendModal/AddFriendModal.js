@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import { View, Text, Alert } from "react-native";
+import { View, Text } from "react-native";
 import styles from "./styles";
 import globalStyles from "../../styles/globalStyles";
 import Modal from "react-native-modalbox";
 import InputField from "../InputField/InputField";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import CloseButton from "../CloseButton/CloseButton";
+import InputError from "../InputError/InputError";
 import firebase from "../../../FirebaseConfig";
 
 const AddFriendModal = ({ isOpen, onClosed, triggerBackdrop }) => {
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [email, setEmail] = useState("");
   const currentUserId = firebase.auth().currentUser.uid;
   const currentUserRef = firebase
@@ -23,28 +26,34 @@ const AddFriendModal = ({ isOpen, onClosed, triggerBackdrop }) => {
   };
 
   const getUserByEmail = async () => {
-    await firebase
+    const snapshot = await firebase
       .firestore()
       .collection("users")
       .where("email", "==", email)
-      .get()
-      .then((snapshot) => {
-        snapshot.forEach((doc) => {
-          const userId = doc.id;
-          updateFollowingList(userId);
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-        Alert.alert("Error!", `${error}`);
+      .get();
+
+      if (snapshot.empty) {
+        setError(true);
+        setErrorMsg("Oops! Couldn't find email. Please try again.");
+        return;
+      }
+
+      snapshot.forEach((doc) => {
+        const userId = doc.id;
+        updateFollowingList(userId);
       });
+      onClosed();
+      triggerBackdrop();
   };
 
   return (
     <Modal
       style={globalStyles.modalContainer}
       isOpen={isOpen}
-      onClosed={onClosed}
+      onClosed={() => {
+        onClosed();
+        setError(false);
+      }}
       coverScreen={true}
     >
       <View style={globalStyles.closeButtonContainer}>
@@ -57,23 +66,22 @@ const AddFriendModal = ({ isOpen, onClosed, triggerBackdrop }) => {
       </View>
       <View style={globalStyles.inputWrapper}>
         <Text style={[globalStyles.title, styles.title]}>
-          Follow a friend by adding their email.
+          Follow a friend by adding their email
         </Text>
         <InputField
-          label="Email"
           placeholder="example@mail.com"
           onChangeText={(email) => setEmail(email)}
         />
+        <InputError error={error} errorMsg={errorMsg} />
         <SubmitButton
           label="Add Friend"
           onPress={() => {
             if (email !== "") {
               getUserByEmail();
-              onClosed();
               setEmail("");
-              triggerBackdrop();
             } else {
-              Alert.alert("Field empty", "Please enter a valid email address.");
+              setError(true);
+              setErrorMsg("Field empty, please enter a valid email address");
             }
           }}
         />
