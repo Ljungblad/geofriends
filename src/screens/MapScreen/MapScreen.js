@@ -109,6 +109,7 @@ const MapScreen = () => {
     await currentUserRef.update({
       "pin.isActive": false,
       "pin.description": "",
+      "pin.createdAt": null,
     });
   };
 
@@ -213,10 +214,11 @@ const MapScreen = () => {
             }}
           />
 
-          {currentUser && (
+          {currentUser && currentUser.pin.createdAt && (
             <CustomCallout
               name={currentUser.name}
               description={currentUser.pin.description}
+              createdAt={currentUser.pin.createdAt}
               isOpen={currentUserCallout}
               onClosed={() => {
                 setCurrentUserCallout(false);
@@ -224,10 +226,11 @@ const MapScreen = () => {
             />
           )}
 
-          {focusedUser && (
+          {focusedUser && focusedUser.pin.createdAt && (
             <CustomCallout
               name={focusedUser.name}
               description={focusedUser.pin.description}
+              createdAt={focusedUser.pin.createdAt}
               isOpen={openCallout}
               onClosed={() => {
                 setOpenCallout(false);

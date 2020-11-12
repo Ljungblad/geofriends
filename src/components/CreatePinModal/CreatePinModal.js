@@ -16,9 +16,12 @@ const CreatePinModal = ({ isOpen, onClosed }) => {
     .doc(currentUserId);
 
   const updatePin = async () => {
+    const date = new Date();
+    
     await currentUserRef.update({
       "pin.description": description,
       "pin.isActive": true,
+      "pin.createdAt": date,
     });
   };
 

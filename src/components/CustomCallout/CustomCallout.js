@@ -5,7 +5,10 @@ import globalStyles from "../../styles/globalStyles";
 import Modal from "react-native-modalbox";
 import CloseButton from "../CloseButton/CloseButton";
 
-const CustomCallout = ({ name, description, isActive, isOpen, onClosed }) => {
+const CustomCallout = ({ name, description, isOpen, onClosed, createdAt }) => {
+  const timeStamp = createdAt.toDate();
+  const time = `${timeStamp.getHours()}:${timeStamp.getMinutes()}`;
+
   return (
     <Modal
       style={styles.container}
@@ -24,7 +27,10 @@ const CustomCallout = ({ name, description, isActive, isOpen, onClosed }) => {
         />
       </View>
       <View style={styles.contentContainer}>
-        <Text style={[globalStyles.boldFont, styles.text]}>{name}</Text>
+        <View style={styles.wrapper}>
+          <Text style={[globalStyles.boldFont, styles.text]}>{name}</Text>
+          <Text style={[globalStyles.smallFont, styles.timeStamp]}>{time}</Text>
+        </View>
         <View style={styles.descriptionContainer}>
           <Text style={[globalStyles.regularFont, styles.descriptionText]}>
             {description}
