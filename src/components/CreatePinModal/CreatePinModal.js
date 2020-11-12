@@ -33,7 +33,6 @@ const CreatePinModal = ({ isOpen, onClosed }) => {
         <CloseButton
           size={30}
           onPress={() => {
-            console.log("close");
             onClosed();
           }}
         />

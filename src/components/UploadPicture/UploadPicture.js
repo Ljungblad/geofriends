@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Text, View, Button, Image, TouchableOpacity } from "react-native";
-import globalStyles from "../../styles/globalStyles";
+import React from "react";
+import { View, Image, TouchableOpacity } from "react-native";
 import styles from "./styles";
 import { Ionicons } from "@expo/vector-icons";
 import colors from "../../styles/colors";

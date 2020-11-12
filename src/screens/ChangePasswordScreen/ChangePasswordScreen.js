@@ -30,12 +30,10 @@ const ChangePasswordScreen = ({ navigation }) => {
             navigation.navigate("Profile");
           })
           .catch((error) => {
-            console.log(error);
             Alert.alert("Error!", `${error}`);
           });
       })
       .catch((error) => {
-        console.log(error);
         Alert.alert("Error!", `${error}`);
       });
   };

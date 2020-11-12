@@ -26,14 +26,12 @@ export default function App() {
   });
 
   if (fontsLoaded) {
-    console.log('font loaded');
     return (
       <NavigationContainer>
         {user ? <TabNavigator /> : <AuthNavigator />}
       </NavigationContainer>
     );
   } else {
-    console.log('font NOT loaded');
     return (
       <AppLoading 
         startAsync={getFonts}
@@ -41,5 +39,4 @@ export default function App() {
       />
     );
   }
-
 }

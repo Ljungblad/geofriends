@@ -9,8 +9,6 @@ import CloseButton from "../CloseButton/CloseButton";
 import firebase from "../../../FirebaseConfig";
 
 const AddFriendModal = ({ isOpen, onClosed, triggerBackdrop }) => {
-  const [error, setError] = useState(false);
-  const errorMsg = "Oops! Couldn't find email. Please try again.";
   const [email, setEmail] = useState("");
   const currentUserId = firebase.auth().currentUser.uid;
   const currentUserRef = firebase
@@ -24,7 +22,6 @@ const AddFriendModal = ({ isOpen, onClosed, triggerBackdrop }) => {
     });
   };
 
-  // !!!! CHECK IF EMAIL EXISTS IN DATABASE !!!!
   const getUserByEmail = async () => {
     await firebase
       .firestore()
@@ -37,12 +34,9 @@ const AddFriendModal = ({ isOpen, onClosed, triggerBackdrop }) => {
           updateFollowingList(userId);
         });
       })
-      .catch((err) => {
-        console.log(err);
-        Alert.alert(
-          "Invalid email!",
-          "We could not find the user you were looking for."
-        );
+      .catch((error) => {
+        console.log(error);
+        Alert.alert("Error!", `${error}`);
       });
   };
 

@@ -19,7 +19,6 @@ const CustomCallout = ({ name, description, isActive, isOpen, onClosed }) => {
         <CloseButton
           size={30}
           onPress={() => {
-            console.log("close");
             onClosed();
           }}
         />

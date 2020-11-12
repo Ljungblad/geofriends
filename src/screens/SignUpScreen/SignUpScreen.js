@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { Text, View, Alert } from "react-native";
 import InputField from "../../components/InputField/InputField";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import SecondaryButton from "../../components/SecondaryButton/SecondayButton";
@@ -38,7 +38,6 @@ const SignUpScreen = ({ navigation }) => {
               description: "",
             },
           });
-        console.log(res);
       })
       .catch((error) => {
         Alert.alert("Error!", `${error}`);
