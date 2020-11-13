@@ -13,13 +13,4 @@ export default StyleSheet.create({
   logotypeWrapper: {
     margin: 50,
   },
-  loginLink: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 10,
-  },
-  loginText: {
-    marginVertical: 5,
-    marginRight: 10,
-  },
 });

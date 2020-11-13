@@ -1,19 +1,22 @@
 import React from "react";
 import styles from "./styles";
-import { KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard } from "react-native";
+import {
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from "react-native";
 
 const KeyboardScroll = ({ children }) => {
-
-    return (
+  return (
     <KeyboardAvoidingView
       behavior={Platform.OS == "ios" ? "padding" : "height"}
       style={styles.container}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        { children }
+        {children}
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
-    )
-}
+  );
+};
 
 export default KeyboardScroll;
