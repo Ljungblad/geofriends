@@ -32,18 +32,18 @@ const AddFriendModal = ({ isOpen, onClosed, triggerBackdrop }) => {
       .where("email", "==", email)
       .get();
 
-      if (snapshot.empty) {
-        setError(true);
-        setErrorMsg("Oops! Couldn't find email. Please try again.");
-        return;
-      }
+    if (snapshot.empty) {
+      setError(true);
+      setErrorMsg("Oops! Couldn't find email.");
+      return;
+    }
 
-      snapshot.forEach((doc) => {
-        const userId = doc.id;
-        updateFollowingList(userId);
-      });
-      onClosed();
-      triggerBackdrop();
+    snapshot.forEach((doc) => {
+      const userId = doc.id;
+      updateFollowingList(userId);
+    });
+    onClosed();
+    triggerBackdrop();
   };
 
   return (
@@ -81,7 +81,7 @@ const AddFriendModal = ({ isOpen, onClosed, triggerBackdrop }) => {
               setEmail("");
             } else {
               setError(true);
-              setErrorMsg("Field empty, please enter a valid email address");
+              setErrorMsg("Please enter a valid email.");
             }
           }}
         />

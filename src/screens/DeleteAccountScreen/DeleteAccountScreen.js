@@ -3,12 +3,15 @@ import { View, Alert } from "react-native";
 import InputField from "../../components/InputField/InputField";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import KeyboardScroll from "../../components/KeyboardScroll/KeyboardScroll";
+import InputError from "../../components/InputError/InputError";
 import globalStyles from "../../styles/globalStyles";
 import firebase from "../../../FirebaseConfig";
 
 const DeleteAccountScreen = () => {
-  const user = firebase.auth().currentUser;
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [password, setPassword] = useState("");
+  const user = firebase.auth().currentUser;
 
   const reauthenticate = (password) => {
     const credential = firebase.auth.EmailAuthProvider.credential(
@@ -34,12 +37,14 @@ const DeleteAccountScreen = () => {
                 Alert.alert("Success", "Account was deleted");
               })
               .catch((error) => {
-                Alert.alert("Error!", `${error}`);
+                setError(true);
+                setErrorMsg(`${error.message}`);
               });
           });
       })
       .catch((error) => {
-        Alert.alert("Error!", `${error}`);
+        setError(true);
+        setErrorMsg(`${error.message}`);
       });
   };
 
@@ -53,7 +58,14 @@ const DeleteAccountScreen = () => {
             secureTextEntry={true}
             onChangeText={(password) => setPassword(password)}
           />
-          <SubmitButton label="Delete account" onPress={handleDeleteAccount} />
+          <InputError error={error} errorMsg={errorMsg} />
+          <SubmitButton
+            label="Delete account"
+            onPress={() => {
+              handleDeleteAccount();
+              setError(false);
+            }}
+          />
         </View>
       </View>
     </KeyboardScroll>

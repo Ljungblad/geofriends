@@ -3,10 +3,13 @@ import { View, Alert } from "react-native";
 import InputField from "../../components/InputField/InputField";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import KeyboardScroll from "../../components/KeyboardScroll/KeyboardScroll";
+import InputError from "../../components/InputError/InputError";
 import globalStyles from "../../styles/globalStyles";
 import firebase from "../../../FirebaseConfig";
 
 const LoginScreen = () => {
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [email, setEmail] = useState("email");
   const [password, setPassword] = useState("password");
 
@@ -15,7 +18,8 @@ const LoginScreen = () => {
       .auth()
       .signInWithEmailAndPassword(email, password)
       .catch((error) => {
-        Alert.alert("Error!", `${error}`);
+        setError(true);
+        setErrorMsg(`${error.message}`);
       });
   };
 
@@ -32,7 +36,14 @@ const LoginScreen = () => {
             onChangeText={(password) => setPassword(password)}
             secureTextEntry={true}
           />
-          <SubmitButton label="Login" onPress={handleLogin} />
+          <InputError error={error} errorMsg={errorMsg} />
+          <SubmitButton
+            label="Login"
+            onPress={() => {
+              setError(false);
+              handleLogin();
+            }}
+          />
         </View>
       </View>
     </KeyboardScroll>

@@ -5,9 +5,12 @@ import globalStyles from "../../styles/globalStyles";
 import Modal from "react-native-modalbox";
 import SubmitButton from "../SubmitButton/SubmitButton";
 import CloseButton from "../CloseButton/CloseButton";
+import InputError from "../InputError/InputError";
 import firebase from "../../../FirebaseConfig";
 
 const CreatePinModal = ({ isOpen, onClosed }) => {
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [description, setDescription] = useState("");
   const currentUserId = firebase.auth().currentUser.uid;
   const currentUserRef = firebase
@@ -17,7 +20,7 @@ const CreatePinModal = ({ isOpen, onClosed }) => {
 
   const updatePin = async () => {
     const date = new Date();
-    
+
     await currentUserRef.update({
       "pin.description": description,
       "pin.isActive": true,
@@ -37,6 +40,7 @@ const CreatePinModal = ({ isOpen, onClosed }) => {
           size={30}
           onPress={() => {
             onClosed();
+            setError(false);
           }}
         />
       </View>
@@ -51,6 +55,7 @@ const CreatePinModal = ({ isOpen, onClosed }) => {
           multiline={true}
           maxLength={144}
         />
+        <InputError error={error} errorMsg={errorMsg} />
         <SubmitButton
           label="Add pin"
           onPress={() => {
@@ -59,7 +64,9 @@ const CreatePinModal = ({ isOpen, onClosed }) => {
               onClosed();
               setDescription("");
             } else {
-              Alert.alert("Description is empty", "Please enter a description");
+              setError(true);
+              setErrorMsg("Please enter a description.");
+              return;
             }
           }}
         />
