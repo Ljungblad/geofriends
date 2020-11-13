@@ -3,10 +3,15 @@ import { View, Alert } from "react-native";
 import InputField from "../../components/InputField/InputField";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import KeyboardScroll from "../../components/KeyboardScroll/KeyboardScroll";
+import InputError from "../../components/InputError/InputError";
 import globalStyles from "../../styles/globalStyles";
 import firebase from "../../../FirebaseConfig";
 
 const ChangePasswordScreen = ({ navigation }) => {
+  const [secondError, setSecondError] = useState(false);
+  const [secondErrorMsg, setSecondErrorMsg] = useState("");
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
 
@@ -30,11 +35,13 @@ const ChangePasswordScreen = ({ navigation }) => {
             navigation.navigate("Profile");
           })
           .catch((error) => {
-            Alert.alert("Error!", `${error}`);
+            setSecondError(true);
+            setSecondErrorMsg(`${error.message}`);
           });
       })
       .catch((error) => {
-        Alert.alert("Error!", `${error}`);
+        setError(true);
+        setErrorMsg(`${error.message}`);
       });
   };
 
@@ -49,14 +56,20 @@ const ChangePasswordScreen = ({ navigation }) => {
               setCurrentPassword(currentPassword)
             }
           />
+          <InputError error={error} errorMsg={errorMsg} />
           <InputField
             placeholder="Enter your new password"
             secureTextEntry={true}
             onChangeText={(newPassword) => setNewPassword(newPassword)}
           />
+          <InputError error={secondError} errorMsg={secondErrorMsg} />
           <SubmitButton
             label="Change password"
-            onPress={handleChangePassword}
+            onPress={() => {
+              handleChangePassword();
+              setError(false);
+              setSecondError(false);
+            }}
           />
         </View>
       </View>

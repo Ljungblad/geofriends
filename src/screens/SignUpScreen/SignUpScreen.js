@@ -4,17 +4,26 @@ import InputField from "../../components/InputField/InputField";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import SecondaryButton from "../../components/SecondaryButton/SecondayButton";
 import KeyboardScroll from "../../components/KeyboardScroll/KeyboardScroll";
+import InputError from "../../components/InputError/InputError";
 import globalStyles from "../../styles/globalStyles";
 import firebase from "../../../FirebaseConfig";
 import styles from "./styles";
 import colors from "../../styles/colors";
+import { set } from "react-native-reanimated";
 
 const SignUpScreen = ({ navigation }) => {
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
 
   const handleSignUp = () => {
+    if (name == "") {
+      setError(true);
+      setErrorMsg("Please enter a name.");
+      return;
+    }
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
@@ -41,7 +50,8 @@ const SignUpScreen = ({ navigation }) => {
           });
       })
       .catch((error) => {
-        Alert.alert("Error!", `${error}`);
+        setError(true);
+        setErrorMsg(`${error.message}`);
       });
   };
 
@@ -63,6 +73,7 @@ const SignUpScreen = ({ navigation }) => {
             secureTextEntry={true}
             onChangeText={(password) => setPassword(password)}
           />
+          <InputError error={error} errorMsg={errorMsg} />
           <SubmitButton label="Sign up" onPress={handleSignUp} />
         </View>
 
@@ -74,7 +85,10 @@ const SignUpScreen = ({ navigation }) => {
             color={colors.primary}
             underLine="none"
             label="Login"
-            onPress={() => navigation.navigate("Login")}
+            onPress={() => {
+              setError(false);
+              navigation.navigate("Login");
+            }}
           />
         </View>
       </View>
