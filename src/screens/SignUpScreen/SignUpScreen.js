@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import { Text, View, Alert } from "react-native";
+import { Text, View, ScrollView } from "react-native";
 import InputField from "../../components/InputField/InputField";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import SecondaryButton from "../../components/SecondaryButton/SecondayButton";
 import KeyboardScroll from "../../components/KeyboardScroll/KeyboardScroll";
 import InputError from "../../components/InputError/InputError";
+import Logotype from "../../components/Logotype/Logotype";
 import globalStyles from "../../styles/globalStyles";
 import firebase from "../../../FirebaseConfig";
 import styles from "./styles";
 import colors from "../../styles/colors";
-import { set } from "react-native-reanimated";
 
 const SignUpScreen = ({ navigation }) => {
   const [error, setError] = useState(false);
@@ -56,43 +56,48 @@ const SignUpScreen = ({ navigation }) => {
   };
 
   return (
-    <KeyboardScroll>
-      <View style={globalStyles.container}>
-        <View style={globalStyles.inputWrapper}>
-          <InputField
-            placeholder="Name"
-            onChangeText={(name) => setName(name)}
-            autoCapitalize="words"
-          />
-          <InputField
-            placeholder="Email"
-            onChangeText={(email) => setEmail(email)}
-          />
-          <InputField
-            placeholder="Password"
-            secureTextEntry={true}
-            onChangeText={(password) => setPassword(password)}
-          />
-          <InputError error={error} errorMsg={errorMsg} />
-          <SubmitButton label="Sign up" onPress={handleSignUp} />
-        </View>
+    <ScrollView style={styles.scrollView}>
+      <KeyboardScroll>
+        <View style={styles.container}>
+          <View style={styles.logotypeWrapper}>
+            <Logotype />
+          </View>
+          <View style={globalStyles.inputWrapper}>
+            <InputField
+              placeholder="Name"
+              onChangeText={(name) => setName(name)}
+              autoCapitalize="words"
+            />
+            <InputField
+              placeholder="Email"
+              onChangeText={(email) => setEmail(email)}
+            />
+            <InputField
+              placeholder="Password"
+              secureTextEntry={true}
+              onChangeText={(password) => setPassword(password)}
+            />
+            <InputError error={error} errorMsg={errorMsg} />
+            <SubmitButton label="Sign up" onPress={handleSignUp} />
+          </View>
 
-        <View style={styles.loginLink}>
-          <Text style={[styles.loginText, globalStyles.boldFont]}>
-            Already have an account?
-          </Text>
-          <SecondaryButton
-            color={colors.primary}
-            underLine="none"
-            label="Login"
-            onPress={() => {
-              setError(false);
-              navigation.navigate("Login");
-            }}
-          />
+          <View style={styles.loginLink}>
+            <Text style={[styles.loginText, globalStyles.boldFont]}>
+              Already have an account?
+            </Text>
+            <SecondaryButton
+              color={colors.primary}
+              underLine="none"
+              label="Login"
+              onPress={() => {
+                setError(false);
+                navigation.navigate("Login");
+              }}
+            />
+          </View>
         </View>
-      </View>
-    </KeyboardScroll>
+      </KeyboardScroll>
+    </ScrollView>
   );
 };
 

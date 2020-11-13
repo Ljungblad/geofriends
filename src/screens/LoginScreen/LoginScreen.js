@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import { View, Alert } from "react-native";
+import { View, ScrollView } from "react-native";
 import InputField from "../../components/InputField/InputField";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import KeyboardScroll from "../../components/KeyboardScroll/KeyboardScroll";
 import InputError from "../../components/InputError/InputError";
+import Logotype from "../../components/Logotype/Logotype";
 import globalStyles from "../../styles/globalStyles";
 import firebase from "../../../FirebaseConfig";
+import styles from "./styles";
 
 const LoginScreen = () => {
   const [error, setError] = useState(false);
@@ -24,29 +26,34 @@ const LoginScreen = () => {
   };
 
   return (
-    <KeyboardScroll>
-      <View style={globalStyles.container}>
-        <View style={globalStyles.inputWrapper}>
-          <InputField
-            placeholder="Email"
-            onChangeText={(email) => setEmail(email)}
-          />
-          <InputField
-            placeholder="Password"
-            onChangeText={(password) => setPassword(password)}
-            secureTextEntry={true}
-          />
-          <InputError error={error} errorMsg={errorMsg} />
-          <SubmitButton
-            label="Login"
-            onPress={() => {
-              setError(false);
-              handleLogin();
-            }}
-          />
+    <ScrollView style={styles.scrollView}>
+      <KeyboardScroll>
+        <View style={styles.container}>
+          <View style={styles.logotypeWrapper}>
+            <Logotype />
+          </View>
+          <View style={globalStyles.inputWrapper}>
+            <InputField
+              placeholder="Email"
+              onChangeText={(email) => setEmail(email)}
+            />
+            <InputField
+              placeholder="Password"
+              onChangeText={(password) => setPassword(password)}
+              secureTextEntry={true}
+            />
+            <InputError error={error} errorMsg={errorMsg} />
+            <SubmitButton
+              label="Login"
+              onPress={() => {
+                setError(false);
+                handleLogin();
+              }}
+            />
+          </View>
         </View>
-      </View>
-    </KeyboardScroll>
+      </KeyboardScroll>
+    </ScrollView>
   );
 };
 
