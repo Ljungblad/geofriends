@@ -14,7 +14,8 @@ import CustomCallout from "../../components/CustomCallout/CustomCallout";
 
 //ICONS
 import { Entypo } from "@expo/vector-icons";
-// console.disableYellowBox = true;
+
+console.disableYellowBox = true;
 
 const MapScreen = () => {
   const [location, setLocation] = useState(null);
