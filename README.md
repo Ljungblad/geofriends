@@ -1,8 +1,7 @@
 # GeoFriends
-<img alt="Screenshot 2020-11-16" src="./assets/screenshots/mapScreen.png">
-<img alt="Screenshot 2020-11-16" src="./assets/screenshots/friendScreen.png">
+<img width="800" src="./assets/screenshots/screenshot.png">
 
->School project where the assigment was to develop a new website for Gundla Gårdscafé and their business. The customer wanted a simplistic design with an easy way of editing the content on the website without coding. For editing the content we chose [Sanity](https://www.sanity.io/), a headless CMS with an easy and customizable user interface. The website is live at this [link](https://gundlagards-cafe.vercel.app/).
+>GeoFriends is an app built with [React Native](https://reactnative.dev/) and [Firebase](https://firebase.google.com/) where users can follow their friends and see their location on a map. Each user can also place a pin on the map with a description that is displayed to the users followers. 
 
 ## Installation
 
@@ -24,7 +23,7 @@ $ npm install
 $ npm start
 ```
 
-4. Download the [Expo Development Client](https://expo.io/tools#client) for Android or iOS.
+4. Download the [Expo Development Client App](https://expo.io/tools#client) for Android or iOS.
 
 5. Scan the QR code with your camera to start the app.
 
@@ -37,3 +36,6 @@ $ npm start
 ## Authors
 - [Michaela Lundborg](https://github.com/lundborgm)
 - [Victor Ljungblad](https://github.com/Ljungblad)
+
+## License
+This project is licensed under the MIT License.
